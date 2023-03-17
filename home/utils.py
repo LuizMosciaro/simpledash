@@ -33,3 +33,20 @@ def get_selic():
     response = requests.get(url)
     interest = response.json()[0]['valor']
     return {'selic':f'{(1 + float(interest)/100) ** workdays - 1:.2%}'}
+
+def get_ipca():
+    date_str = datetime.today()
+    if date_str.month < 10:
+        date_str_month = '0' + str(date_str.month)
+        dt = f'{date_str.year}{date_str_month}'
+    else:
+        dt = f'{date_str.year}{date_str_month}'
+
+    url = f'https://servicodados.ibge.gov.br/api/v3/agregados/7060/periodos/{dt}/variaveis/63|69|2265?localidades=N1[all]'
+    response = requests.get(url)
+    context = {
+        'montly_inflation' : response.json()[0]['resultados']['series']['serie'],
+        'ytd_inflation' : response.json()[1]['resultados']['series']['serie'],
+        'past_12m_inflation' : response.json()[2]['resultados']['series']['serie']
+    }
+    return context

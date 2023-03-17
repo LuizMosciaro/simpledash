@@ -91,16 +91,14 @@
     </div>
     <div id='content5'>
         <ul>
-            <li>
-                SELIC: {{ selic }}
-            </li>
+            <li>SELIC: {{ selic }}</li>
         </ul>
     </div>
     <div id='content6'>
         <ul>
-            <li>
-                IPCA (Variacao %) https://api.bcb.gov.br/dados/serie/bcdata.sgs.11426/dados?formato=json&dataInicial=17/03/2023&dataFinal=17/03/2023
-            </li>
+            <li>IPCA Mensal: {{ montly_inflation }}%</li>
+            <li>IPCA Acumulada Anual: {{ ytd_inflation }}%</li>
+            <li>IPCA Acumulada 12 meses: {{ past_12m_inflation }}%</li>
         </ul>
     </div>
     <div id='content7'>
