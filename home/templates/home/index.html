@@ -1,0 +1,120 @@
+{% load static %}
+<head>
+    <link rel="stylesheet" type='text/css' href="{% static 'home/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<div class='container'>
+    <div id='sidebar'>
+        <ul>
+            <li class="logo">
+                <a href="#" class="sidebar-link">
+                    <i class="fa-solid fa-angles-right"></i>
+                    <span class="link-text" id="adjust-item1">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="sidebar-link">
+                    <i class="fa-solid fa-bars"></i>
+                    <span class="link-text" id="adjust-item1">Menu</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="sidebar-link">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span class="link-text">Portfolio</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="sidebar-link">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span class="link-text">Strategies</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="sidebar-link">
+                    <i class="fa-solid fa-wallet"></i>
+                    <span class="link-text">Wallet</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="sidebar-link">
+                    <i class="fa-solid fa-network-wired"></i>
+                    <span class="link-text" id="adjust-item2">Rewards</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="sidebar-link">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <span class="link-text">Market Analysis</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="sidebar-link">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span class="link-text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div id='content1'>
+        <ul>
+            <h2>Greetings, {{ User }}!</h2>
+            <h3>You are visiting from :</h3>
+            <ul>
+                <li>IP Address : {{ip}}</li>
+                <li>City: {{ location_city }}</li>
+                <li>Country: {{ location_country }}</li>
+            <ul>
+        </ul>
+    </div>
+    <div id='content2'>
+        <li>Carrossel Noticias via API</li>
+        <h3>Local Weather:</h3>
+        <ul>
+            <li>Temperature (C): {{ temp }}</li>
+            <li>Termic Sensation (C): {{ sensacao_term }} </li>
+            <li>Humidity: {{ humidade }}</li>
+            <li>Weather Conditions: {{ condicao }}</li>
+            <li>Sunrise: {{ raiar_sol }}</li>
+            <li>Sunset: {{ anoitecer }}</li>
+        </ul>
+    </ul>
+        </ul>
+    </div>
+    <div id='content4'>
+        <ul>
+            <li>Perfil</li>
+            <li>Logo usuario</li>
+        </ul>
+    </div>
+    <div id='content5'>
+        <ul>
+            <li>
+                SELIC: (Chamada Api) https://www.dadosdemercado.com.br/
+            </li>
+        </ul>
+    </div>
+    <div id='content6'>
+        <ul>
+            <li>
+                IGPM: (Chamada Api) https://www.dadosdemercado.com.br/
+            </li>
+        </ul>
+    </div>
+    <div id='content7'>
+        Content7
+    </div>
+    <div id='content8'>
+        <ul>
+            <li>
+                Principais Negociacoes  -  (Chamada Api)
+            </li>
+        </ul>
+    </div>
+    <div id='content9'>
+        <ul><li>Contato: Luiz M.</li></ul>
+    </div>
+    <main class="main">Main</main>
+</div>
