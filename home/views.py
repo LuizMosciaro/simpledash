@@ -21,6 +21,6 @@ def home(request):
         "location_city": location_city
     }
     context.update(get_weather(location_city))
-    context.update(get_weather())
+    context.update(get_selic())
     
     return render(request,'home/index.html',context)
