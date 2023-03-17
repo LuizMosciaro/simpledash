@@ -14,6 +14,7 @@ def home(request):
     location_country = location["country_name"]
     location_city = location["city"]
     context = {
+        'user':'Luiz',
         "ip": ip,
         "location_country": location_country,
         "location_city": location_city
