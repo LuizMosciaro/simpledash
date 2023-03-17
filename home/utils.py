@@ -51,5 +51,3 @@ def get_ipca():
         'past_12m_inflation' : dataJson[2]['resultados'][0]['series'][0]['serie'][dt]
     }
     return context
-
-print(get_ipca())
