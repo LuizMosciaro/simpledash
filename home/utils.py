@@ -3,7 +3,7 @@ import requests
 from datetime import date
 from workalendar.america import Brazil
 from datetime import datetime
-
+from dateutil.relativedelta import relativedelta
 
 def get_weather(city):
     api_key = os.getenv('WEATHER_API_KEY')
@@ -36,17 +36,20 @@ def get_selic():
 
 def get_ipca():
     date_str = datetime.today()
+    date_str = date_str - relativedelta(months=1)
     if date_str.month < 10:
-        date_str_month = '0' + str(date_str.month)
-        dt = f'{date_str.year}{date_str_month}'
+        dt = f'{date_str.year}0{date_str.month}'
     else:
-        dt = f'{date_str.year}{date_str_month}'
+        dt = f'{date_str.year}{date_str.month}'
 
     url = f'https://servicodados.ibge.gov.br/api/v3/agregados/7060/periodos/{dt}/variaveis/63|69|2265?localidades=N1[all]'
     response = requests.get(url)
+    dataJson = response.json()
     context = {
-        'montly_inflation' : response.json()[0]['resultados']['series']['serie'],
-        'ytd_inflation' : response.json()[1]['resultados']['series']['serie'],
-        'past_12m_inflation' : response.json()[2]['resultados']['series']['serie']
+        'montly_inflation' : dataJson[0]['resultados'][0]['series'][0]['serie'][dt],
+        'ytd_inflation' : dataJson[1]['resultados'][0]['series'][0]['serie'][dt],
+        'past_12m_inflation' : dataJson[2]['resultados'][0]['series'][0]['serie'][dt]
     }
     return context
+
+print(get_ipca())
