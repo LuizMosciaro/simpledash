@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.gis.geoip2 import GeoIP2
-from .utils import get_weather
+from .utils import get_weather,get_selic
 
 def home(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -21,5 +21,6 @@ def home(request):
         "location_city": location_city
     }
     context.update(get_weather(location_city))
+    context.update(get_weather())
     
     return render(request,'home/index.html',context)
