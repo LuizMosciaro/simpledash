@@ -18,6 +18,6 @@ def home(request):
         "location_country": location_country,
         "location_city": location_city
     }
-    context.update(get_weather(location))
+    context.update(get_weather(location_city))
     
     return render(request,'home/index.html',context)
