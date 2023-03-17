@@ -13,7 +13,6 @@ def home(request):
     location = g.city(ip)
     location_country = location["country_name"]
     location_city = location["city"]
-
     context = {
         "ip": ip,
         "location_country": location_country,
