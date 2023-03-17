@@ -13,8 +13,9 @@ def home(request):
     location = g.city(ip)
     location_country = location["country_name"]
     location_city = location["city"]
+    user = 'Luiz'
     context = {
-        'user':'Luiz',
+        'user':user,
         "ip": ip,
         "location_country": location_country,
         "location_city": location_city
