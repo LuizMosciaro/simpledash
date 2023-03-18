@@ -4,6 +4,8 @@ from datetime import date
 from workalendar.america import Brazil
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from bs4 import BeautifulSoup
+import time
 
 def get_weather(city):
     api_key = os.getenv('WEATHER_API_KEY')
@@ -49,5 +51,25 @@ def get_ipca():
         'montly_inflation' : dataJson[0]['resultados'][0]['series'][0]['serie'][dt],
         'ytd_inflation' : dataJson[1]['resultados'][0]['series'][0]['serie'][dt],
         'past_12m_inflation' : dataJson[2]['resultados'][0]['series'][0]['serie'][dt]
+    }
+    return context
+
+def get_ipca():
+    header = {'Content-Type': 'text/html; charset=utf-8'}
+    response = requests.get('https://www.ibge.gov.br/indicadores',headers=header)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    
+    tds_ultimos = soup.find('td', class_='ultimo')
+    month_inf = tds_ultimos.get_text().strip().replace(' ','').replace('Último','').replace('\n','').replace(',','.')[:5]
+
+    tds_12months = soup.find('td', class_='desktop-tablet-only dozemeses')
+    past_12m_inflation = tds_12months.get_text().strip().replace(' ','').replace('12meses','').replace('\n','').replace(',','.')[:5]
+
+    tds_ytd = soup.find('td', class_='desktop-tablet-only ano')
+    ytd_inf = tds_ytd.get_text().strip().replace(' ','').replace('Noano','').replace('\n','').replace(',','.')[:5]
+    context = {
+        'montly_inflation': month_inf,
+        'ytd_inflation': ytd_inf,
+        'past_12m_inflation': past_12m_inflation
     }
     return context
