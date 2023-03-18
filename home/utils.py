@@ -4,6 +4,9 @@ from datetime import date
 from workalendar.america import Brazil
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from requests import adapters
+import ssl
+from urllib3 import poolmanager
 
 def get_weather(city):
     api_key = os.getenv('WEATHER_API_KEY')
@@ -35,6 +38,18 @@ def get_selic():
     return {'selic':f'{(1 + float(interest)/100) ** workdays - 1:.2%}'}
 
 def get_ipca():
+    class TLSAdapter(adapters.HTTPAdapter):
+        def init_poolmanager(self, connections, maxsize, block=False):
+            """Create and initialize the urllib3 PoolManager."""
+            ctx = ssl.create_default_context()
+            ctx.set_ciphers('DEFAULT@SECLEVEL=1')
+            self.poolmanager = poolmanager.PoolManager(
+                    num_pools=connections,
+                    maxsize=maxsize,
+                    block=block,
+                    ssl_version=ssl.PROTOCOL_TLS,
+                    ssl_context=ctx)
+
     date_str = datetime.today()
     date_str = date_str - relativedelta(months=1)
     if date_str.month < 10:
@@ -43,7 +58,11 @@ def get_ipca():
         dt = f'{date_str.year}{date_str.month}'
 
     url = f'https://servicodados.ibge.gov.br/api/v3/agregados/7060/periodos/{dt}/variaveis/63|69|2265?localidades=N1[all]'
-    response = requests.get(url,verify=False)
+    
+    session = requests.session()
+    session.mount('https://', TLSAdapter())
+    response = session.get(url)
+
     dataJson = response.json()
     context = {
         'montly_inflation' : dataJson[0]['resultados'][0]['series'][0]['serie'][dt],
