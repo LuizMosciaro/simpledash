@@ -1,6 +1,5 @@
 import os
 import requests
-import certifi
 from datetime import date
 from workalendar.america import Brazil
 from datetime import datetime
@@ -36,7 +35,6 @@ def get_selic():
     return {'selic':f'{(1 + float(interest)/100) ** workdays - 1:.2%}'}
 
 def get_ipca():
-    cafile = certifi.where()
     date_str = datetime.today()
     date_str = date_str - relativedelta(months=1)
     if date_str.month < 10:
@@ -45,7 +43,7 @@ def get_ipca():
         dt = f'{date_str.year}{date_str.month}'
 
     url = f'https://servicodados.ibge.gov.br/api/v3/agregados/7060/periodos/{dt}/variaveis/63|69|2265?localidades=N1[all]'
-    response = requests.get(url, verify=cafile)
+    response = requests.get(url,verify=False)
     dataJson = response.json()
     context = {
         'montly_inflation' : dataJson[0]['resultados'][0]['series'][0]['serie'][dt],
