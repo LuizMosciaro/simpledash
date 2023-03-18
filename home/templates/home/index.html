@@ -97,13 +97,12 @@
     <div id='content6'>
         <ul>
             <li>IPCA Mensal: {{ montly_inflation }}%</li>
-            <li>IPCA Acumulada Anual: {{ ytd_inflation }}%</li>
-            <li>IPCA Acumulada 12 meses: {{ past_12m_inflation }}%</li>
+            <li>IPCA Acumulado: {{ ytd_inflation }}%</li>
+            <li>IPCA 12 meses: {{ past_12m_inflation }}%</li>
         </ul>
     </div>
     <div id='content7'>
-        DOLAR 
-        https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao='03-17-2023'&$top=100&$format=json&$select=cotacaoCompra
+        DOLAR: {{ dolar }}
     </div>
     <div id='content8'>
         <ul>

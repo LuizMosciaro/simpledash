@@ -23,7 +23,6 @@ class CustomHttpAdapter (requests.adapters.HTTPAdapter):
             num_pools=connections, maxsize=maxsize,
             block=block, ssl_context=self.ssl_context)
 
-
 def get_legacy_session():
     ctx = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
     ctx.options |= 0x4  # OP_LEGACY_SERVER_CONNECT
@@ -97,3 +96,12 @@ def get_ipca2():
         'past_12m_inflation': ytd_inf
     }
     return context
+
+def get_dolar():
+    cal = Brazil()
+    dt = cal.add_working_days(datetime.today(),-1)
+    today = dt.strftime('%m-%d-%Y')
+    url = f"https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao='"+ today + "'&$top=100&$format=json&$select=cotacaoCompra"
+    response = requests.get(url)
+    dolar = str(response.json()['value'][0]['cotacaoCompra'])[:4]
+    return {'dolar': dolar}
