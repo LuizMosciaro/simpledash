@@ -61,22 +61,39 @@ def get_selic():
     return {'selic':f'{(1 + float(interest)/100) ** workdays - 1:.2%}'}
 
 def get_ipca():
+    date_str = datetime.today()
+    date_str = date_str - relativedelta(months=1)
+    if date_str.month < 10:
+        dt = f'{date_str.year}0{date_str.month}'
+    else:
+        dt = f'{date_str.year}{date_str.month}'
+
+    url = f'https://servicodados.ibge.gov.br/api/v3/agregados/7060/periodos/{dt}/variaveis/63|69|2265?localidades=N1[all]'
+    response = get_legacy_session().get(url)
+    dataJson = response.json()
+    context = {
+        'montly_inflation' : dataJson[0]['resultados'][0]['series'][0]['serie'][dt],
+        'ytd_inflation' : dataJson[1]['resultados'][0]['series'][0]['serie'][dt],
+        'past_12m_inflation' : dataJson[2]['resultados'][0]['series'][0]['serie'][dt]
+    }
+    return context
+
+def get_ipca2():
     header = {'Content-Type': 'text/html; charset=utf-8'}
-    response = get_legacy_session().get('https://www.ibge.gov.br/indicadores',headers=header)
-    #response = requests.get('https://www.ibge.gov.br/indicadores',headers=header)
+    response = requests.get('https://www.ibge.gov.br/indicadores',headers=header)
     soup = BeautifulSoup(response.content, 'html.parser')
-    
     tds_ultimos = soup.find('td', class_='ultimo')
     month_inf = tds_ultimos.get_text().strip().replace(' ','').replace('Último','').replace('\n','').replace(',','.')[:5]
 
     tds_12months = soup.find('td', class_='desktop-tablet-only dozemeses')
-    past_12m_inflation = tds_12months.get_text().strip().replace(' ','').replace('12meses','').replace('\n','').replace(',','.')[:5]
+    twelve_months_inf = tds_12months.get_text().strip().replace(' ','').replace('12meses','').replace('\n','').replace(',','.')[:5]
 
     tds_ytd = soup.find('td', class_='desktop-tablet-only ano')
     ytd_inf = tds_ytd.get_text().strip().replace(' ','').replace('Noano','').replace('\n','').replace(',','.')[:5]
+    
     context = {
         'montly_inflation': month_inf,
-        'ytd_inflation': ytd_inf,
-        'past_12m_inflation': past_12m_inflation
+        'ytd_inflation': twelve_months_inf,
+        'past_12m_inflation': ytd_inf
     }
     return context
