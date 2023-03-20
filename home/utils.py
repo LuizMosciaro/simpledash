@@ -39,12 +39,12 @@ def get_weather(city):
         context = {
             'lat': query['latitude'],
             'long': query['longitude'],
-            'sensacao_term': round((float(query['currentConditions']['feelslike']) - 32) * 5/9, 1),
+            'feelslike': round((float(query['currentConditions']['feelslike']) - 32) * 5/9, 1),
             'temp': round((float(query['currentConditions']['temp']) - 32) * 5/9, 1),
-            'humidade': str(query['currentConditions']['humidity']) + '%',
-            'condicao': query['currentConditions']['conditions'],
-            'raiar_sol': query['currentConditions']['sunrise'],
-            'anoitecer': query['currentConditions']['sunset'],
+            'humidity': str(query['currentConditions']['humidity']),
+            'conditions': str(query['currentConditions']['conditions']).lower(),
+            'sunrise': query['currentConditions']['sunrise'],
+            'sunset': query['currentConditions']['sunset'],
         }
         return context
     else:
@@ -105,3 +105,9 @@ def get_dolar():
     response = requests.get(url)
     dolar = str(response.json()['value'][0]['cotacaoCompra'])[:4]
     return {'dolar': dolar}
+
+def get_btc():
+    url = 'https://brapi.dev/api/v2/crypto?coin=BTC&currency=BRL'
+    response = requests.get(url)
+    btc = response.json()['coins'][0]['regularMarketPrice']
+    return {'btc':btc}

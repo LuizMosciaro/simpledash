@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.gis.geoip2 import GeoIP2
-from .utils import get_weather,get_selic,get_ipca,get_dolar
+from .utils import get_weather,get_selic,get_ipca,get_dolar,get_btc
 
 def home(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -24,5 +24,6 @@ def home(request):
     context.update(get_selic())
     context.update(get_ipca())
     context.update(get_dolar())
+    context.update(get_btc())
     
     return render(request,'home/index.html',context)

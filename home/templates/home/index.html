@@ -1,8 +1,12 @@
 {% load static %}
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type='text/css' href="{% static 'home/styles.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:wght@200&display=swap" rel="stylesheet">
 </head>
 
 <div class='container'>
@@ -11,7 +15,7 @@
             <li class="logo">
                 <a href="#" class="sidebar-link">
                     <i class="fa-solid fa-angles-right"></i>
-                    <span class="link-text" id="adjust-item1">Dashboard</span>
+                    <span class="link-text">Dashboard</span>
                 </a>
             </li>
             <li>
@@ -59,60 +63,214 @@
         </ul>
     </div>
     <div id='content1'>
-        <ul>
-            <h2>Greetings, {{ user }}.</h2>
-            <h3>You are visiting from :</h3>
-            <ul>
-                <li>IP Address : {{ip}}</li>
-                <li>City: {{ location_city }}</li>
-                <li>Country: {{ location_country }}</li>
-            <ul>
-        </ul>
+        <h2>Greetings User!</h2>
+        <h3>At your location the temperature its {{ temp }}ºC with sensation of {{ feelslike }}ºC and relative humidity of {{ humidity }}%, also {{ conditions }}.</h3>
     </div>
-    <div id='content2'>
-        <li>Carrossel Noticias via API</li>
-        <h3>Local Weather:</h3>
-        <ul>
-            <li>Temperature (C): {{ temp }}</li>
-            <li>Termic Sensation (C): {{ sensacao_term }} </li>
-            <li>Humidity: {{ humidade }}</li>
-            <li>Weather Conditions: {{ condicao }}</li>
-            <li>Sunrise: {{ raiar_sol }}</li>
-            <li>Sunset: {{ anoitecer }}</li>
-        </ul>
-    </ul>
-        </ul>
-    </div>
+    <!-- <div id='content2'>
+        <table>
+            <tr>
+                <th>Temperature (C)</th>
+                <th>Termic Sensation (C)</th>
+                <th>Humidity</th>
+                <th>Weather Condition</th>
+                <th>Sunrise</th>
+                <th>Sunset</th>
+            </tr>
+            <tr>
+                <td>28.5º</td>
+                <td>31º</td>
+                <td>70%</td>
+                <td>Partly Cloud</td>
+                <td>06:05:15</td>
+                <td>18:11:12</td>
+            </tr>
+        </table> -->
     <div id='content4'>
-        <ul>
-            <li>Perfil</li>
-            <li>Logo usuario</li>
-        </ul>
+        <li>Perfil</li>
+        <li>
+            <lord-icon
+                src="https://cdn.lordicon.com/ajkxzzfb.json"
+                trigger="hover"
+                colors="primary:#e4e4e4,secondary:#848484"
+                state="hover-looking-around"
+                style="width:50px;height:50px">
+            </lord-icon>
+        </li>
     </div>
     <div id='content5'>
-        <ul>
-            <li>SELIC: {{ selic }}</li>
-        </ul>
+        <h3>SELIC: {{ selic }}%</h3>
+        <lord-icon
+            src="https://cdn.lordicon.com/rgyftmhc.json"
+            trigger="hover"
+            colors="primary:#ffffff,secondary:#ffffff"
+            stroke="50"
+            style="width:70px;height:70px">
+        </lord-icon>
     </div>
     <div id='content6'>
         <ul>
-            <li>IPCA Mensal: {{ montly_inflation }}%</li>
-            <li>IPCA Acumulado: {{ ytd_inflation }}%</li>
-            <li>IPCA 12 meses: {{ past_12m_inflation }}%</li>
+            <li>DÓLAR: R$ {{ dolar }}</li>
+            <li>BITCOIN: R${{ btc }}</li>
         </ul>
+        <div style="margin-bottom: 10px;">
+            <lord-icon
+            src="https://cdn.lordicon.com/qhviklyi.json"
+            trigger="hover"
+            colors="primary:#ffffff,secondary:#e4e4e4"
+            style="width:70px;height:80px">
+        </lord-icon>
+        </div>
     </div>
     <div id='content7'>
-        DOLAR: {{ dolar }}
+        <table>
+            <tr>
+                <th>IPCA Mensal</th>
+                <th>IPCA Acumulado</th>
+                <th>IPCA 12 Meses</th>
+            </tr>
+            <tr>
+                <td>{{ montly_inflation }}%</td>
+                <td>{{ ytd_inflation }}%</td>
+                <td>{{ past_12m_inflation }}%</td>
+            </tr>
+        </table>
     </div>
-    <div id='content8'>
-        <ul>
-            <li>
-                Principais Negociacoes  -  (Chamada Api)
-            </li>
-        </ul>
+    <div id=content8>
+        <h3 style="padding-bottom: 5px; margin:unset;">Highest Volumes</h3>
+        <div class="wrapper">
+            <!-- TODO: Com DJANGO Iterar usando o "FOR" -->
+            <!-- TODO: Com DJANGO Iterar usando o "FOR" -->
+            <!-- TODO: Com DJANGO Iterar usando o "FOR" -->
+            <div class="columnA">
+                <ul>
+                    <li style="font-size: 14px;">VIA (VIIA3)</li>
+                    <li style="font-size: 11px;">Sector: Technology</li>
+                    <!-- Colocar um if para checar se o numero de Var e negativo ou positivo e mudar cor 
+                    Triangulo positivo = <i claz222222222222ss="fa-solid fa-caret-up"></i> -->
+                    <li style="font-size: 11px;">Close: R$2.09 Var: 1.45% <i class="fa-solid fa-caret-down" style="color: rgb(180, 0, 0);"></i></li>
+                </ul>
+            </div>
+            <div class="columnB">
+                <i class="fa-solid fa-chart-pie"></i>
+            </div>
+        </div>  
+        <br>
+        <div class="wrapper">
+            <div class="columnA">
+                <ul>
+                    <li style="font-size: 14px;">PETROBRAS PN (PETR3)</li>
+                    <li style="font-size: 11px;">Sector: Mineral Extraction</li>
+                    <!-- Colocar um if para checar se o numero de Var e negativo ou positivo e mudar cor 
+                    Triangulo positivo = <i class="fa-solid fa-caret-up"></i> -->
+                    <li style="font-size: 11px;">Close: R$14.23 Var: 3.56% <i class="fa-solid fa-caret-down" style="color: rgb(180, 0, 0);"></i></li>
+                </ul>
+            </div>
+            <div class="columnB">
+                <i class="fa-solid fa-chart-pie"></i>
+            </div>
+        </div>  
+        <br>
+        <div class="wrapper">
+            <div class="columnA">
+                <ul>
+                    <li style="font-size: 14px;">RAIZEN PN (RAIZ4)</li>
+                    <li style="font-size: 11px;">Sector: Fabrics Industry</li>
+                    <!-- Colocar um if para checar se o numero de Var e negativo ou positivo e mudar cor 
+                    Triangulo positivo = <i class="fa-solid fa-caret-up"></i> -->
+                    <li style="font-size: 11px;">Close: R$6.02 Var: -2.86% <i class="fa-solid fa-caret-down" style="color: rgb(180, 0, 0);"></i></li>
+                </ul>
+            </div>
+            <div class="columnB">
+                <i class="fa-solid fa-chart-pie"></i>
+            </div>
+        </div>  
+        <br>
+        <div class="wrapper">
+            <div class="columnA">
+                <ul>
+                    <li style="font-size: 14px;">BRADESCO PN (BBDC3)</li>
+                    <li style="font-size: 11px;">Sector: Banking</li>
+                    <!-- Colocar um if para checar se o numero de Var e negativo ou positivo e mudar cor 
+                    Triangulo positivo = <i class="fa-solid fa-caret-up"></i> -->
+                    <li style="font-size: 11px;">Close: R$13.67 Var: 0.71% <i class="fa-solid fa-caret-down" style="color: rgb(180, 0, 0);"></i></li>
+                </ul>
+            </div>
+            <div class="columnB">
+                <i class="fa-solid fa-chart-pie"></i>
+            </div>
+        </div>
+        <br>
+        <div class="wrapper">
+            <div class="columnA">
+                <ul>
+                    <li style="font-size: 14px;">AMBEV S.A (ABEV3)</li>
+                    <li style="font-size: 11px;">Sector: Consumer Goods</li>
+                    <!-- Colocar um if para checar se o numero de Var e negativo ou positivo e mudar cor 
+                    Triangulo positivo = <i class="fa-solid fa-caret-up"></i> -->
+                    <li style="font-size: 11px;">Close: R$11.32 Var: -0.20% <i class="fa-solid fa-caret-down" style="color: rgb(180, 0, 0);"></i></li>
+                </ul>
+            </div>
+            <div class="columnB">
+                <i class="fa-solid fa-chart-pie"></i>
+            </div>
+        </div>
+        <br>
+        <div class="wrapper">
+            <div class="columnA">
+                <ul>
+                    <li style="font-size: 14px;">PETROBRAS PN (PETR3)</li>
+                    <li style="font-size: 11px;">Sector: Mineral Extraction</li>
+                    <!-- Colocar um if para checar se o numero de Var e negativo ou positivo e mudar cor 
+                    Triangulo positivo = <i class="fa-solid fa-caret-up"></i> -->
+                    <li style="font-size: 11px;">Close: R$14.23 Var: 3.56% <i class="fa-solid fa-caret-down" style="color: rgb(180, 0, 0);"></i></li>
+                </ul>
+            </div>
+            <div class="columnB">
+                <i class="fa-solid fa-chart-pie"></i>
+            </div>
+        </div>  
     </div>
     <div id='content9'>
-        <ul><li>Contato: Luiz M.</li></ul>
+        <div class="wrapper">
+            <div class="columnA">
+                <ul>
+                    <li>Contact: Luiz M.</li>
+                    <li>Your IP: {{ ip }}</li>
+                    <li>City: {{ location_city }}</li>
+                    <li>Country:{{ location_country }}</li>
+                </ul>
+            </div>
+            <div class="columnB">
+                <lord-icon
+                src="https://cdn.lordicon.com/zzcjjxew.json"
+                trigger="hover"
+                colors="primary:#000000,secondary:#000000"
+                style="width:50px;height:50px">
+            </lord-icon>
+            </div>
+        </div>
     </div>
-    <main class="main">Main</main>
+    <main>
+        <div class="item-grid">
+            <li>Valor de Mercado</li>
+            <p>R$ 4.517.170.000</p>
+        </div>
+        <div class="item-grid">
+            <li>Nmro de Acoes</li>
+            <p>348.010.000</p>
+        </div>
+        <div class="item-grid">
+            <li>Volume diario</li>
+            <p>R$ 199.195.000</p>
+        </div>
+        <div class="item-grid">
+            <li>VPA</li>
+            <p>-54,62</p>
+        </div>
+        <div class="item-grid">
+            <li>ROE</li>
+            <p>3,8%</p>
+        </div>      
+        <div class="chart-price">CHART PRICE</div>
+    </main>
 </div>
