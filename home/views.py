@@ -21,7 +21,6 @@ def home(request):
         "location_city": location_city
     }
     context.update(get_weather(location_city))
-    context = {'user':'Luiz','ip':1,'location_country':'Manaus','location_city':'Brasil'}
     context.update(get_selic())
     context.update(get_ipca())
     context.update(get_dolar())
