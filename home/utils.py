@@ -5,7 +5,6 @@ from workalendar.america import Brazil
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from bs4 import BeautifulSoup
-import time
 import requests
 import urllib3
 import ssl
