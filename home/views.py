@@ -37,3 +37,8 @@ def home(request):
             return render(request,'home/index.html',context)
     
     return render(request,'home/index.html',context)
+
+def test_view(request):
+    if request.method == 'POST':
+        print(request.POST)
+    return render(request,'home/test.html')
