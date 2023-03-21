@@ -9,6 +9,7 @@ import time
 import requests
 import urllib3
 import ssl
+import locale
 
 
 class CustomHttpAdapter (requests.adapters.HTTPAdapter):
@@ -109,5 +110,106 @@ def get_dolar():
 def get_btc():
     url = 'https://brapi.dev/api/v2/crypto?coin=BTC&currency=BRL'
     response = requests.get(url)
-    btc = response.json()['coins'][0]['regularMarketPrice']
+    # this sets locale to the current Operating System value
+    locale.setlocale(locale.LC_ALL, '') 
+    btc = locale.currency(response.json()['coins'][0]['regularMarketPrice'],grouping=True)
     return {'btc':btc}
+
+def get_highest_volume_stocks():
+    url = 'https://brapi.dev/api/quote/list?sortBy=volume&sortOrder=desc&limit=30'
+    response = requests.get(url)
+    data_list = response.json()['stocks']
+    locale.setlocale(locale.LC_ALL, '')
+    context = []
+    for data in data_list:
+        mapped_data = {
+            'stock_symbol': data['stock'],
+            'stock_name': data['name'],
+            'stock_close': float(data['close']),
+            'stock_change': round(float(data['change']),2),
+            'stock_volume': locale.currency(data['volume'],grouping=True) if data['volume'] else 'N.A.',
+            'stock_market_cap': locale.currency(data['market_cap'],grouping=True) if data['market_cap'] else 'N.A.',
+            'stock_logo': data['logo'],
+            'stock_sector': data['sector'],
+            }
+        context.append(mapped_data)
+    return {'stocks_data': context}
+
+def get_quote(ticker):
+    url = f'https://brapi.dev/api/quote/{ticker}?range=1d&interval=1d&fundamental=false&dividends=false'
+    response = requests.get(url=url)
+    resultados = response.json()['results'][0]
+    context = []
+    for data in resultados:
+        mapped_data = {
+            'symbol': data['symbol'], # 'PETR4',
+            'shortName': data['shortName'], # 'PETROBRAS   PN      N2',
+            'longName': data['longName'], # 'Petróleo Brasileiro S.A. - Petrobras',
+            'currency': data['currency'], # 'BRL',
+            'regularMarketPrice': data['regularMarketPrice'], # 22.93,
+            'regularMarketDayHigh': data['regularMarketDayHigh'], # 23.65,
+            'regularMarketDayLow': data['regularMarketDayLow'], # 22.89,
+            'regularMarketDayRange': data['regularMarketDayRange'], # '22.89 - 23.65',
+            'regularMarketChange': round(float(data['regularMarketChange']),2), # -0.5799999,  
+            'regularMarketChangePercent': round(float(data['regularMarketChangePercent']),2), # -2.467035, 
+            'regularMarketTime': data['regularMarketTime'], # '2023-03-20T20:07:45.000Z',
+            'marketCap': data['marketCap'], # 317335142400,
+            'regularMarketVolume': locale.currency(data['regularMarketVolume'],grouping=True) if data['regularMarketVolume'] else 'N.A.', # 57210500, 
+            'regularMarketPreviousClose': data['regularMarketPreviousClose'], # 23.51,
+            'regularMarketOpen': data['regularMarketOpen'], # 23.51,
+            'averageDailyVolume10Day': data['averageDailyVolume10Day'], # 66321590,
+            'averageDailyVolume3Month': data['averageDailyVolume3Month'], # 66903138,
+            'fiftyTwoWeekLowChange': data['fiftyTwoWeekLowChange'], # 2.1599998,
+            'fiftyTwoWeekLowChangePercent': data['fiftyTwoWeekLowChangePercent'], # 0.103996135,
+            'fiftyTwoWeekRange': data['fiftyTwoWeekRange'], # '20.77 - 38.39',
+            'fiftyTwoWeekHighChange': data['fiftyTwoWeekHighChange'], # -15.459999,
+            'fiftyTwoWeekHighChangePercent': data['fiftyTwoWeekHighChangePercent'], # -0.402709,
+            'fiftyTwoWeekLow': data['fiftyTwoWeekLow'], # 20.77,
+            'fiftyTwoWeekHigh': data['fiftyTwoWeekHigh'], # 38.39,
+            'twoHundredDayAverage': data['twoHundredDayAverage'], # 28.416,
+            'twoHundredDayAverageChange': data['twoHundredDayAverageChange'], # -5.486,
+            'twoHundredDayAverageChangePercent': data['twoHundredDayAverageChangePercent'], # -0.19306025,
+            'logourl': data['logourl'] #'https://s3-symbol-logo.tradingview.com/brasileiro-petrobras--big.svg'
+        }
+        context.append(mapped_data)
+    return {'stocks_full_data': context}
+
+def get_historic_prices(symbol):
+    alphaavantage_api = '5360KM6F1W76V4V8'
+    url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol={symbol}.SAO&apikey={alphaavantage_api}'
+    r = requests.get(url)
+    data_json = r.json()
+    
+    labels = [] #Dias
+    data = [] #Preco
+    for key,value in data_json["Time Series (Daily)"].items():
+        labels.append(key)
+        data.append(value['1. open'])
+    
+    context = {
+        'labels':list(reversed(labels)),
+        'data':list(reversed(data))
+    }
+    return {'chart_data': context}
+
+def get_fundamentals(symbol):
+    header = {
+        "Accept": "*/*",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+    }
+    url = f'https://www.fundamentus.com.br/detalhes.php?papel={symbol}'
+    response = requests.get(url,headers=header)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    td_mkt_value = soup.find('td',class_='data w3').get_text().strip()
+    stock_float = soup.find_all('table',class_='w728')[1].find_all('td')[-1].get_text().strip()
+    pl = soup.find_all('table',class_='w728')[2].find_all('td',class_='data w2')[0].get_text().strip()
+    vpa = soup.find_all('table',class_='w728')[2].find_all('td',class_='data w2')[3].get_text().strip()
+    roe = soup.find_all('table',class_='w728')[2].find_all('td',class_='data')[23].get_text().strip()
+    context = {
+        'td_mkt_value':str(td_mkt_value).replace(',','.'),
+        'stock_float':str(stock_float).replace(',','.'),
+        'pl':str(pl).replace(',','.'),
+        'vpa':str(vpa).replace(',','.'),
+        'roe':str(roe).replace(',','.'),
+        }
+    return context

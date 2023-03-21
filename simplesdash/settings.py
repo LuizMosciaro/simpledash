@@ -11,9 +11,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
 ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = ['https://simpledash-production-350e.up.railway.app']
@@ -74,8 +71,17 @@ DATABASES = {
         'PASSWORD': os.getenv('PGPASSWORD'),
         'HOST': os.getenv('PGHOST'),
         'PORT': os.getenv('PGPORT'),
+    },
+    'local': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+if DEBUG:
+    SECRET_KEY = 'randon1q43f3sdmfo0!secret'
+    DATABASES['default'] = DATABASES['local']
 
 
 # Password validation

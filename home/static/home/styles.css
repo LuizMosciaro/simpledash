@@ -5,7 +5,7 @@
   --secondary-background-color: #929292;
   --shadow: 10px 10px 13px -3px rgba(4, 4, 4, 0.5);
   --shadow-rightbar: 5px 3px rgba(0, 0, 0, 0.47);
-  --transition: 400ms
+  --transition: 400ms;
 }
 
 html,body {
@@ -244,8 +244,6 @@ ul {
   background: var(--main-background-color);
   grid-area: content8;
   border-radius: var(--main-radius);
-  padding-top: var(--main-padding);
-  margin: 10px 10px;
   overflow: auto;
 }
 
