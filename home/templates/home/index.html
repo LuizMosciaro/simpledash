@@ -1,11 +1,12 @@
+{% load static %}
 <head>
-    <link rel="stylesheet" type='text/css' href="styles-template.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type='text/css' href="{% static 'home/styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
     <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:wght@200&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:wght@200&display=swap" rel="stylesheet">
 </head>
 
 <div class='container'>
@@ -63,7 +64,7 @@
     </div>
     <div id='content1'>
         <h2>Greetings User!</h2>
-        <h3>At your location the temperature its 28.5C with sensation of 31C and relative humidity of 70%, also partly cloud.</h3>
+        <h3>At your location the temperature its {{ temp }}ºC with sensation of {{ feelslike }}ºC and relative humidity of {{ humidity }}%, it's also {{ conditions }}.</h3>
     </div>
     <!-- <div id='content2'>
         <table>
@@ -97,7 +98,7 @@
         </li>
     </div>
     <div id='content5'>
-        <h3>SELIC: 13.71%</h3>
+        <h3>SELIC: {{ selic }}%</h3>
         <lord-icon
             src="https://cdn.lordicon.com/rgyftmhc.json"
             trigger="hover"
@@ -108,8 +109,8 @@
     </div>
     <div id='content6'>
         <ul>
-            <li>DÓLAR: R$5.26</li>
-            <li>BITCOIN: R$144,514.07</li>
+            <li>DÓLAR: R$ {{ dolar }}</li>
+            <li>BITCOIN: R$ {{ btc }}</li>
         </ul>
         <div style="margin-bottom: 10px;">
             <lord-icon
@@ -128,115 +129,52 @@
                 <th>IPCA 12 Meses</th>
             </tr>
             <tr>
-                <td>0.86%</td>
-                <td>1.53%</td>
-                <td>5.65%</td>
+                <td>{{ montly_inflation }}%</td>
+                <td>{{ ytd_inflation }}%</td>
+                <td>{{ past_12m_inflation }}%</td>
             </tr>
         </table>
     </div>
     <div id=content8>
-        <h3 style="padding-bottom: 5px; margin:unset;">Highest Volumes</h3>
+        <h3 style="padding: 10px 0px 5px; margin:unset;">Highest Volumes</h3>
+    {% for data in  stocks_data %}
         <div class="wrapper">
-            <!-- TODO: Com DJANGO Iterar usando o "FOR" -->
-            <!-- TODO: Com DJANGO Iterar usando o "FOR" -->
-            <!-- TODO: Com DJANGO Iterar usando o "FOR" -->
             <div class="columnA">
                 <ul>
-                    <li style="font-size: 14px;">VIA (VIIA3)</li>
-                    <li style="font-size: 11px;">Sector: Technology</li>
-                    <!-- Colocar um if para checar se o numero de Var e negativo ou positivo e mudar cor 
-                    Triangulo positivo = <i claz222222222222ss="fa-solid fa-caret-up"></i> -->
-                    <li style="font-size: 11px;">Close: R$2.09 Var: 1.45% <i class="fa-solid fa-caret-down" style="color: rgb(180, 0, 0);"></i></li>
+                    <form action="" method="POST" id="form-{{ data.stock_symbol }}" style="margin: 0px;">
+                        {% csrf_token %}
+                        <input type="text" id="name" name="name" value="{{ data.stock_name }}" style=" cursor: pointer; font-size: 14px; font-weight: 600; font-family: inherit;border: none; outline: none;  background-color: transparent;" readonly>
+                        <input type="text" id="symbol" name="symbol" value="({{ data.stock_symbol }})" style=" cursor: pointer; font-size: 11px; font-weight: 600; font-family: inherit;border: none; outline: none;  background-color: transparent; padding:0px;" readonly>
+                        <input type="text" value="Sector: {{ data.stock_sector }}" style="cursor: pointer; font-size: 11px; border: none; outline: none;  background-color: transparent; padding:0px;" readonly>
+                        <input type="text" value="Close: R${{ data.stock_close }} Var: {{ data.stock_change }}% " style="cursor: pointer; font-size: 11px; border: none; outline: none;  background-color: transparent; padding:0px; width: 130px; margin:0px;" readonly>
+                        {% if data.stock_change < 0 %}
+                        <i class="fa-solid fa-caret-down" style="color: rgb(180, 0, 0);"></i>
+                        {% elif data.stock_change > 0 %}
+                        <i class="fa-solid fa-caret-up" style="color: rgb(0, 107, 4);"></i>
+                        {% endif %}
+                    </form>
+                    <script>
+                        document.getElementById('form-{{ data.stock_symbol }}').addEventListener('click', function() {
+                            document.getElementById('form-{{ data.stock_symbol }}').submit();
+                        });
+                    </script>
                 </ul>
             </div>
             <div class="columnB">
-                <i class="fa-solid fa-chart-pie"></i>
+                <img src="{{ data.stock_logo }}" alt="{{ data.stock_logo }}" style="width: 45px; height:auto; border-radius:5px; border: 1.3px solid black;">
             </div>
         </div>  
         <br>
-        <div class="wrapper">
-            <div class="columnA">
-                <ul>
-                    <li style="font-size: 14px;">PETROBRAS PN (PETR3)</li>
-                    <li style="font-size: 11px;">Sector: Mineral Extraction</li>
-                    <!-- Colocar um if para checar se o numero de Var e negativo ou positivo e mudar cor 
-                    Triangulo positivo = <i class="fa-solid fa-caret-up"></i> -->
-                    <li style="font-size: 11px;">Close: R$14.23 Var: 3.56% <i class="fa-solid fa-caret-down" style="color: rgb(180, 0, 0);"></i></li>
-                </ul>
-            </div>
-            <div class="columnB">
-                <i class="fa-solid fa-chart-pie"></i>
-            </div>
-        </div>  
-        <br>
-        <div class="wrapper">
-            <div class="columnA">
-                <ul>
-                    <li style="font-size: 14px;">RAIZEN PN (RAIZ4)</li>
-                    <li style="font-size: 11px;">Sector: Fabrics Industry</li>
-                    <!-- Colocar um if para checar se o numero de Var e negativo ou positivo e mudar cor 
-                    Triangulo positivo = <i class="fa-solid fa-caret-up"></i> -->
-                    <li style="font-size: 11px;">Close: R$6.02 Var: -2.86% <i class="fa-solid fa-caret-down" style="color: rgb(180, 0, 0);"></i></li>
-                </ul>
-            </div>
-            <div class="columnB">
-                <i class="fa-solid fa-chart-pie"></i>
-            </div>
-        </div>  
-        <br>
-        <div class="wrapper">
-            <div class="columnA">
-                <ul>
-                    <li style="font-size: 14px;">BRADESCO PN (BBDC3)</li>
-                    <li style="font-size: 11px;">Sector: Banking</li>
-                    <!-- Colocar um if para checar se o numero de Var e negativo ou positivo e mudar cor 
-                    Triangulo positivo = <i class="fa-solid fa-caret-up"></i> -->
-                    <li style="font-size: 11px;">Close: R$13.67 Var: 0.71% <i class="fa-solid fa-caret-down" style="color: rgb(180, 0, 0);"></i></li>
-                </ul>
-            </div>
-            <div class="columnB">
-                <i class="fa-solid fa-chart-pie"></i>
-            </div>
-        </div>
-        <br>
-        <div class="wrapper">
-            <div class="columnA">
-                <ul>
-                    <li style="font-size: 14px;">AMBEV S.A (ABEV3)</li>
-                    <li style="font-size: 11px;">Sector: Consumer Goods</li>
-                    <!-- Colocar um if para checar se o numero de Var e negativo ou positivo e mudar cor 
-                    Triangulo positivo = <i class="fa-solid fa-caret-up"></i> -->
-                    <li style="font-size: 11px;">Close: R$11.32 Var: -0.20% <i class="fa-solid fa-caret-down" style="color: rgb(180, 0, 0);"></i></li>
-                </ul>
-            </div>
-            <div class="columnB">
-                <i class="fa-solid fa-chart-pie"></i>
-            </div>
-        </div>
-        <br>
-        <div class="wrapper">
-            <div class="columnA">
-                <ul>
-                    <li style="font-size: 14px;">PETROBRAS PN (PETR3)</li>
-                    <li style="font-size: 11px;">Sector: Mineral Extraction</li>
-                    <!-- Colocar um if para checar se o numero de Var e negativo ou positivo e mudar cor 
-                    Triangulo positivo = <i class="fa-solid fa-caret-up"></i> -->
-                    <li style="font-size: 11px;">Close: R$14.23 Var: 3.56% <i class="fa-solid fa-caret-down" style="color: rgb(180, 0, 0);"></i></li>
-                </ul>
-            </div>
-            <div class="columnB">
-                <i class="fa-solid fa-chart-pie"></i>
-            </div>
-        </div>  
+    {% endfor %}
     </div>
     <div id='content9'>
         <div class="wrapper">
             <div class="columnA">
                 <ul>
                     <li>Contact: Luiz M.</li>
-                    <li>Your IP: 129.222.168.1</li>
-                    <li>City:Manaus</li>
-                    <li>Country:Brasil</li>
+                    <li>Your IP: {{ ip }}</li>
+                    <li>City: {{ location_city }}</li>
+                    <li>Country:{{ location_country }}</li>
                 </ul>
             </div>
             <div class="columnB">
@@ -252,23 +190,36 @@
     <main>
         <div class="item-grid">
             <li>Valor de Mercado</li>
-            <p>R$ 4.517.170.000</p>
+            <p>R$ {{ td_mkt_value }}</p>
         </div>
         <div class="item-grid">
             <li>Nmro de Acoes</li>
-            <p>348.010.000</p>
+            <p>{{ stock_float }}</p>
         </div>
         <div class="item-grid">
-            <li>Volume diario</li>
-            <p>R$ 199.195.000</p>
+            <li>
+                P/L
+                <lord-icon  class="myli" src="https://cdn.lordicon.com/enzmygww.json" trigger="hover" style="width:15px;height:15px;"></lord-icon>
+                <p class="hide">Mede a relação entre o preço das ações e o lucro por ação nos últimos 12 meses</p>
+            </li>
+            
+            <p>{{ pl }}</p>
         </div>
         <div class="item-grid">
-            <li>VPA</li>
-            <p>-54,62</p>
+            <li>
+                VPA
+                <lord-icon  class="myli" src="https://cdn.lordicon.com/enzmygww.json" trigger="hover" style="width:15px;height:15px;"></lord-icon>
+                <p class="hide">Patrimônio Líquido dividido pelo número de ações</p>
+            </li>
+            <p>{{ vpa }}</p>
         </div>
         <div class="item-grid">
-            <li>ROE</li>
-            <p>3,8%</p>
+            <li>
+                ROE
+                <lord-icon  class="myli" src="https://cdn.lordicon.com/enzmygww.json" trigger="hover" style="width:15px;height:15px;"></lord-icon>
+                <p class="hide">Rentabilidade de uma empresa em relação aos recursos próprios investidos</p>
+            </li>
+            <p>{{ roe }}</p>
         </div>      
         <div class="chart-price">CHART PRICE</div>
     </main>
