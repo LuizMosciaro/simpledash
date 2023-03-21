@@ -77,12 +77,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-if DEBUG:
-    SECRET_KEY = 'randon1q43f3sdmfo0!secret'
-    DATABASES['default'] = DATABASES['local']
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

@@ -3,7 +3,7 @@ from django.contrib.gis.geoip2 import GeoIP2
 from .utils import get_weather,get_selic,get_ipca,get_dolar,get_btc,get_highest_volume_stocks,get_fundamentals
 
 def home(request):
-    """x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
         ip = x_forwarded_for.split(',')[0]
     else:
@@ -20,15 +20,15 @@ def home(request):
         "location_country": location_country,
         "location_city": location_city
     }
-    context.update(get_weather(location_city))"""
+    context.update(get_weather(location_city))
     context = {'user':'Luiz','ip':1,'location_country':'Manaus','location_city':'Brasil'}
     context.update(get_selic())
     context.update(get_ipca())
     context.update(get_dolar())
     context.update(get_btc())
     context.update(get_highest_volume_stocks())
-    #Fazer logica de receber o click vindo da funcao acima
     context.update(get_fundamentals('petr4'))
+    
     if request.method == 'POST':
         if "symbol" in request.POST:
             print("SYMBOL PASSED:",request.POST['symbol'])
