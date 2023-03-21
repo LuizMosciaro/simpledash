@@ -71,10 +71,6 @@ DATABASES = {
         'PASSWORD': os.getenv('PGPASSWORD'),
         'HOST': os.getenv('PGHOST'),
         'PORT': os.getenv('PGPORT'),
-    },
-    'local': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 # SECURITY WARNING: don't run with debug turned on in production!
