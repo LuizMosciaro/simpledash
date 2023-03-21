@@ -25,7 +25,7 @@ def home(request):
     context.update(get_ipca())
     context.update(get_dolar())
     context.update(get_btc())
-    context.update(get_highest_volume_stocks())
+    """context.update(get_highest_volume_stocks())
     context.update(get_fundamentals('petr4'))
     
     if request.method == 'POST':
@@ -33,11 +33,6 @@ def home(request):
             print("SYMBOL PASSED:",request.POST['symbol'])
             ticker = str(request.POST['symbol']).replace("(","").replace(")","")
             context.update(get_fundamentals(ticker))
-            return render(request,'home/index.html',context)
+            return render(request,'home/index.html',context)"""
     
     return render(request,'home/index.html',context)
-
-def test_view(request):
-    if request.method == 'POST':
-        print(request.POST)
-    return render(request,'home/test.html')
