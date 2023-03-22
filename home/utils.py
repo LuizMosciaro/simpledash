@@ -6,7 +6,6 @@ from bs4 import BeautifulSoup
 import requests
 import urllib3
 import ssl
-import locale
 from workalendar.america import Brazil
 from dateutil.relativedelta import relativedelta
 
@@ -108,10 +107,8 @@ def get_dolar():
 def get_btc():
     url = 'https://brapi.dev/api/v2/crypto?coin=BTC&currency=BRL'
     response = requests.get(url)
-    # this sets locale to the current Operating System value
-    locale.setlocale(locale.LC_ALL, '') 
-    btc = locale.currency(response.json()['coins'][0]['regularMarketPrice'],grouping=True)
-    return {'btc':btc}
+    btc = response.json()['coins'][0]['regularMarketPrice']
+    return {'btc':'{:,.2f}'.format(btc).replace('.', 'v').replace(',', '.').replace('v', ',')}
 
 """def get_highest_volume_stocks():
     url = 'https://brapi.dev/api/quote/list?sortBy=volume&sortOrder=desc&limit=30'
