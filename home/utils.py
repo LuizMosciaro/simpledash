@@ -113,7 +113,6 @@ def get_btc():
     btc = locale.currency(response.json()['coins'][0]['regularMarketPrice'],grouping=True)
     return {'btc':btc}
 
-
 """def get_highest_volume_stocks():
     url = 'https://brapi.dev/api/quote/list?sortBy=volume&sortOrder=desc&limit=30'
     response = requests.get(url)
