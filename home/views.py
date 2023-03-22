@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.gis.geoip2 import GeoIP2
-from .utils import get_weather,get_selic,get_ipca,get_dolar,get_btc,get_highest_volume_stocks,get_fundamentals
+from .utils import get_weather,get_selic,get_ipca,get_dolar,get_btc,get_highest_volume_stocks,get_fundamentals,get_historic_prices
 
 def home(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -13,12 +13,15 @@ def home(request):
     location = g.city(ip)
     location_country = location["country_name"]
     location_city = location["city"]
+    price_data = get_historic_prices('petr4')
     user = 'Luiz'
     context = {
         'user':user,
         "ip": ip,
         "location_country": location_country,
-        "location_city": location_city
+        "location_city": location_city,
+        "stock_chart_labels": price_data["labels"],
+        "stock_chart_data": price_data["data"],
     }
     context.update(get_weather(location_city))
     context.update(get_selic())
@@ -32,6 +35,10 @@ def home(request):
         if "symbol" in request.POST:
             ticker = str(request.POST['symbol']).replace("(","").replace(")","")
             context.update(get_fundamentals(ticker))
+            price_data = get_historic_prices(ticker)
+            context.update(price_data['stock_chart_labels'])
+            context.update(price_data['stock_chart_data'])
+
             return render(request,'home/index.html',context)
     
     return render(request,'home/index.html',context)

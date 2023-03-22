@@ -1,9 +1,9 @@
 {% load static %}
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
     <link rel="stylesheet" type='text/css' href="{% static 'home/styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
-    <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:wght@200&display=swap" rel="stylesheet">
@@ -221,6 +221,84 @@
             </li>
             <p>{{ roe }}</p>
         </div>      
-        <div class="chart-price">CHART PRICE</div>
+        <div class="chart-price">
+            <div class="chartBox">
+                <canvas id="myChart"></canvas> <!-- Para poder dar resize, precisa estar numa div sozinho -->
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-animation-delay@1.1.0/dist/chartjs-plugin-animation-delay.min.js"></script>
+            <script>
+                const labels = [{% for item in stock_chart_labels %}"{{ item }}",{% endfor %}];
+                const data = [{% for item in stock_chart_data %}{{ item }}, {% endfor %}];
+                
+                const totalDuration = 3000;
+                const delayBetweenPoints = totalDuration / data.length;
+                const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
+                const animation = {
+                x: {
+                    type: 'number',
+                    easing: 'linear',
+                    duration: delayBetweenPoints,
+                    from: NaN, // the point is initially skipped
+                    delay(ctx) {
+                    if (ctx.type !== 'data' || ctx.xStarted) {
+                        return 0;
+                    }
+                    ctx.xStarted = true;
+                    return ctx.index * delayBetweenPoints;
+                    }
+                },
+                y: {
+                    type: 'number',
+                    easing: 'linear',
+                    duration: delayBetweenPoints,
+                    from: previousY,
+                    delay(ctx) {
+                    if (ctx.type !== 'data' || ctx.yStarted) {
+                        return 0;
+                    }
+                    ctx.yStarted = true;
+                    return ctx.index * delayBetweenPoints;
+                    }
+                }
+                };
+
+                const ctx = document.getElementById('myChart').getContext('2d');
+                const myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: "Cotação Diária - Abertura",
+                            data: data,
+                            backgroundColor: 'rgba(130, 130, 130, 0.2)',
+                            borderColor: 'rgba(130, 130, 130, 1)',
+                            borderWidth: 4,
+                            radius: 1,
+                        }]
+                    },
+                options: {
+                    animation:animation,
+                    maintainAspectRatio: false, 
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            grid: {
+                                display: false
+                            },
+                            beginAtZero: true
+                        }
+                    },
+                }
+                }); 
+            </script>
+        </div>
     </main>
 </div>
