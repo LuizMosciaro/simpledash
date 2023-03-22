@@ -36,8 +36,8 @@ def home(request):
             ticker = str(request.POST['symbol']).replace("(","").replace(")","")
             context.update(get_fundamentals(ticker))
             price_data = get_historic_prices(ticker)
-            #context.update({'stock_chart_labels':price_data['labels']})
-            #context.update({'stock_chart_data':price_data['data']})
+            context.update({'stock_chart_labels':price_data['labels']})
+            context.update({'stock_chart_data':price_data['data']})
 
             return render(request,'home/index.html',context)
     
