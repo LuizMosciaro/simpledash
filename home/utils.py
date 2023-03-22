@@ -77,7 +77,7 @@ def get_ipca():
     }
     return context
 
-def get_ipca2():
+"""def get_ipca2():
     header = {'Content-Type': 'text/html; charset=utf-8'}
     response = requests.get('https://www.ibge.gov.br/indicadores',headers=header)
     soup = BeautifulSoup(response.content, 'html.parser')
@@ -212,3 +212,4 @@ def get_fundamentals(symbol):
         'roe':str(roe).replace(',','.'),
         }
     return context
+"""
