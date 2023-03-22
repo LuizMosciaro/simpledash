@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.gis.geoip2 import GeoIP2
-from .utils import get_weather,get_selic,get_ipca,get_dolar,get_btc #,get_highest_volume_stocks,get_fundamentals
+from .utils import get_weather,get_selic,get_ipca,get_dolar,get_btc,get_highest_volume_stocks,get_fundamentals
 
 def home(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -25,13 +25,13 @@ def home(request):
     context.update(get_ipca())
     context.update(get_dolar())
     context.update(get_btc())
-    #context.update(get_highest_volume_stocks())
-    #context.update(get_fundamentals('petr4'))
+    context.update(get_highest_volume_stocks())
+    context.update(get_fundamentals('petr4'))
     
-    #if request.method == 'POST':
-    #    if "symbol" in request.POST:
-    #        ticker = str(request.POST['symbol']).replace("(","").replace(")","")
-    #        context.update(get_fundamentals(ticker))
-    #        return render(request,'home/index.html',context)
+    if request.method == 'POST':
+        if "symbol" in request.POST:
+            ticker = str(request.POST['symbol']).replace("(","").replace(")","")
+            context.update(get_fundamentals(ticker))
+            return render(request,'home/index.html',context)
     
     return render(request,'home/index.html',context)
