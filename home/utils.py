@@ -132,7 +132,7 @@ def get_highest_volume_stocks():
 def get_quote(ticker):
     url = f'https://brapi.dev/api/quote/{ticker}?range=1d&interval=1d&fundamental=false&dividends=false'
     response = requests.get(url=url)
-    resultados = response.json()['results'][0]
+    resultados = response.json()['results']
     context = []
     for data in resultados:
         mapped_data = {
@@ -166,6 +166,7 @@ def get_quote(ticker):
             'logourl': data['logourl'] #'https://s3-symbol-logo.tradingview.com/brasileiro-petrobras--big.svg'
         }
         context.append(mapped_data)
+
     return {'stocks_full_data': context}
 
 def get_historic_prices(symbol):
@@ -207,4 +208,3 @@ def get_fundamentals(symbol):
         'roe':str(roe).replace(',','.'),
         }
     return context
-
