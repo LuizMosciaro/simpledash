@@ -222,7 +222,7 @@
             <p>{{ roe }}</p>
         </div>      
         <div class="chart-price">
-            <div class="chartBox">
+            <div class="chartBox" style="width:auto; height:auto;">
                 <canvas id="myChart"></canvas> <!-- Para poder dar resize, precisa estar numa div sozinho -->
             </div>
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -231,7 +231,7 @@
                 const labels = [{% for item in stock_chart_labels %}"{{ item }}",{% endfor %}];
                 const data = [{% for item in stock_chart_data %}{{ item }}, {% endfor %}];
                 
-                const totalDuration = 3000;
+                const totalDuration = 2000;
                 const delayBetweenPoints = totalDuration / data.length;
                 const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
                 const animation = {
@@ -272,7 +272,7 @@
                             label: "Cotação Diária - Abertura",
                             data: data,
                             backgroundColor: 'rgba(130, 130, 130, 0.2)',
-                            borderColor: 'rgba(130, 130, 130, 1)',
+                            borderColor: 'rgba(35, 34, 39, 1)',
                             borderWidth: 4,
                             radius: 1,
                         }]
