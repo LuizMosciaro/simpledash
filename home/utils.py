@@ -1,15 +1,14 @@
 import os
 import requests
 from datetime import date
-from workalendar.america import Brazil
 from datetime import datetime
-from dateutil.relativedelta import relativedelta
 from bs4 import BeautifulSoup
 import requests
 import urllib3
 import ssl
 import locale
-
+from workalendar.america import Brazil
+from dateutil.relativedelta import relativedelta
 
 class CustomHttpAdapter (requests.adapters.HTTPAdapter):
     # "Transport adapter" that allows us to use custom ssl_context.
@@ -113,6 +112,7 @@ def get_btc():
     locale.setlocale(locale.LC_ALL, '') 
     btc = locale.currency(response.json()['coins'][0]['regularMarketPrice'],grouping=True)
     return {'btc':btc}
+
 
 """def get_highest_volume_stocks():
     url = 'https://brapi.dev/api/quote/list?sortBy=volume&sortOrder=desc&limit=30'
