@@ -110,11 +110,10 @@ def get_btc():
     btc = response.json()['coins'][0]['regularMarketPrice']
     return {'btc':'{:,.2f}'.format(btc).replace('.', 'v').replace(',', '.').replace('v', ',')}
 
-"""def get_highest_volume_stocks():
-    url = 'https://brapi.dev/api/quote/list?sortBy=volume&sortOrder=desc&limit=30'
+def get_highest_volume_stocks():
+    url = 'https://brapi.dev/api/quote/list?sortBy=volume&sortOrder=desc&limit=50'
     response = requests.get(url)
     data_list = response.json()['stocks']
-    locale.setlocale(locale.LC_ALL, '')
     context = []
     for data in data_list:
         mapped_data = {
@@ -122,8 +121,8 @@ def get_btc():
             'stock_name': data['name'],
             'stock_close': float(data['close']),
             'stock_change': round(float(data['change']),2),
-            'stock_volume': locale.currency(data['volume'],grouping=True) if data['volume'] else 'N.A.',
-            'stock_market_cap': locale.currency(data['market_cap'],grouping=True) if data['market_cap'] else 'N.A.',
+            'stock_volume': '{:,.2f}'.format(data["volume"]).replace('.', 'v').replace(',', '.').replace('v', ',') if data['volume'] else 'N.A.',
+            'stock_market_cap': '{:,.2f}'.format(data["market_cap"]).replace('.', 'v').replace(',', '.').replace('v', ',') if data['market_cap'] else 'N.A.',
             'stock_logo': data['logo'],
             'stock_sector': data['sector'],
             }
@@ -149,7 +148,7 @@ def get_quote(ticker):
             'regularMarketChangePercent': round(float(data['regularMarketChangePercent']),2), # -2.467035, 
             'regularMarketTime': data['regularMarketTime'], # '2023-03-20T20:07:45.000Z',
             'marketCap': data['marketCap'], # 317335142400,
-            'regularMarketVolume': locale.currency(data['regularMarketVolume'],grouping=True) if data['regularMarketVolume'] else 'N.A.', # 57210500, 
+            'regularMarketVolume':  '{:,.2f}'.format(data["regularMarketVolume"]).replace('.', 'v').replace(',', '.').replace('v', ',') if data['regularMarketVolume'] else 'N.A.',
             'regularMarketPreviousClose': data['regularMarketPreviousClose'], # 23.51,
             'regularMarketOpen': data['regularMarketOpen'], # 23.51,
             'averageDailyVolume10Day': data['averageDailyVolume10Day'], # 66321590,
@@ -208,4 +207,4 @@ def get_fundamentals(symbol):
         'roe':str(roe).replace(',','.'),
         }
     return context
-"""
+
