@@ -77,7 +77,7 @@ def get_ipca():
     }
     return context
 
-"""def get_ipca2():
+def get_ipca2():
     header = {'Content-Type': 'text/html; charset=utf-8'}
     response = requests.get('https://www.ibge.gov.br/indicadores',headers=header)
     soup = BeautifulSoup(response.content, 'html.parser')
@@ -114,7 +114,7 @@ def get_btc():
     btc = locale.currency(response.json()['coins'][0]['regularMarketPrice'],grouping=True)
     return {'btc':btc}
 
-def get_highest_volume_stocks():
+"""def get_highest_volume_stocks():
     url = 'https://brapi.dev/api/quote/list?sortBy=volume&sortOrder=desc&limit=30'
     response = requests.get(url)
     data_list = response.json()['stocks']
