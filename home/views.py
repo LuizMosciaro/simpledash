@@ -24,7 +24,7 @@ def home(request):
     context.update(get_selic())
     context.update(get_ipca())
     context.update(get_dolar())
-    #context.update(get_btc())
+    context.update(get_btc())
     #context.update(get_highest_volume_stocks())
     #context.update(get_fundamentals('petr4'))
     
