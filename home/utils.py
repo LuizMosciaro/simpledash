@@ -185,7 +185,7 @@ def get_historic_prices(symbol):
         'labels':list(reversed(labels)),
         'data':list(reversed(data))
     }
-    return {'chart_data': context}
+    return context
 
 def get_fundamentals(symbol):
     header = {
