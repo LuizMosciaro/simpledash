@@ -98,7 +98,7 @@
         </li>
     </div>
     <div id='content5'>
-        <h3>SELIC: {{ selic }}%</h3>
+        <h3>SELIC: {{ selic }}</h3>
         <lord-icon
             src="https://cdn.lordicon.com/rgyftmhc.json"
             trigger="hover"
@@ -231,7 +231,7 @@
                 const labels = [{% for item in stock_chart_labels %}"{{ item }}",{% endfor %}];
                 const data = [{% for item in stock_chart_data %}{{ item }}, {% endfor %}];
                 
-                const totalDuration = 2000;
+                const totalDuration = 1500;
                 const delayBetweenPoints = totalDuration / data.length;
                 const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
                 const animation = {
