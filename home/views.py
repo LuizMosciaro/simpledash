@@ -1,30 +1,43 @@
 from django.shortcuts import render
 from django.contrib.gis.geoip2 import GeoIP2
+from geoip2.errors import AddressNotFoundError
 from .utils import get_weather,get_selic,get_ipca,get_dolar,get_btc,get_highest_volume_stocks,get_fundamentals,get_historic_prices
 
 def home(request):
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
-    else:
-        ip = request.META.get('REMOTE_ADDR')
+    try:
+        ip_results = None
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        
+        g = GeoIP2()
+        location = g.city(ip)
+        location_country = location["country_name"]
+        location_city = location["city"]
+        ip_results = {
+            "ip": ip,
+            "location_country": location_country,
+            "location_city": location_city,
+        }
+        
+    except AddressNotFoundError:
+        ip_results = None
+        pass
     
-    g = GeoIP2()
-    location = g.city(ip)
-    location_country = location["country_name"]
-    location_city = location["city"]
-    price_data = get_historic_prices('petr4')
     user = 'Luiz'
+    price_data = get_historic_prices('petr4')
     context = {
         'user':user,
-        "ip": ip,
-        "location_country": location_country,
-        "location_city": location_city,
         "stock_chart_labels": price_data["labels"],
         "stock_chart_data": price_data["data"],
     }
-    context.update(get_weather(location_city))
-    context.update(get_selic())
+    if ip_results:
+        context.update(ip_results)
+        context.update(get_weather(location_city))
+        context.update(get_selic())
+        
     context.update(get_ipca())
     context.update(get_dolar())
     context.update(get_btc())

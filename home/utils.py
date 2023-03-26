@@ -9,6 +9,7 @@ import ssl
 from workalendar.america import Brazil
 from dateutil.relativedelta import relativedelta
 
+
 class CustomHttpAdapter (requests.adapters.HTTPAdapter):
     # "Transport adapter" that allows us to use custom ssl_context.
 
@@ -154,7 +155,6 @@ def get_quote(ticker):
             'averageDailyVolume10Day': data['averageDailyVolume10Day'], # 66321590,
             'averageDailyVolume3Month': data['averageDailyVolume3Month'], # 66903138,
             'fiftyTwoWeekLowChange': data['fiftyTwoWeekLowChange'], # 2.1599998,
-            'fiftyTwoWeekLowChangePercent': data['fiftyTwoWeekLowChangePercent'], # 0.103996135,
             'fiftyTwoWeekRange': data['fiftyTwoWeekRange'], # '20.77 - 38.39',
             'fiftyTwoWeekHighChange': data['fiftyTwoWeekHighChange'], # -15.459999,
             'fiftyTwoWeekHighChangePercent': data['fiftyTwoWeekHighChangePercent'], # -0.402709,
@@ -170,10 +170,10 @@ def get_quote(ticker):
     return {'stocks_full_data': context}
 
 def get_historic_prices(symbol):
-    alphaavantage_api = '5360KM6F1W76V4V8'
+    alphaavantage_api = os.getenv('ALPHA_AVANTAGE_API')
     url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol={symbol}.SAO&apikey={alphaavantage_api}'
-    r = requests.get(url)
-    data_json = r.json()
+    response = requests.get(url)
+    data_json = response.json()
     
     labels = [] #Dias
     data = [] #Preco

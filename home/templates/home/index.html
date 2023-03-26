@@ -174,7 +174,7 @@
                     <li>Contact: Luiz M.</li>
                     <li>Your IP: {{ ip }}</li>
                     <li>City: {{ location_city }}</li>
-                    <li>Country:{{ location_country }}</li>
+                    <li>Country: {{ location_country }}</li>
                 </ul>
             </div>
             <div class="columnB">
@@ -222,7 +222,7 @@
             <p>{{ roe }}</p>
         </div>      
         <div class="chart-price">
-            <div class="chartBox" style="width:auto; height:100%;">
+            <div class="chartBox" style="width:auto; height:100%;overflow:hidden;">
                 <canvas id="myChart"></canvas> <!-- Para poder dar resize, precisa estar numa div sozinho -->
             </div>
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -273,8 +273,13 @@
                             data: data,
                             backgroundColor: 'rgba(130, 130, 130, 0.2)',
                             borderColor: 'rgba(35, 34, 39, 1)',
-                            borderWidth: 4,
+                            borderWidth: 3,
                             radius: 1,
+                            fill:{
+                                target:'origin',
+                                above:'rgba(0, 0, 50, 0.5)',
+                                below: 'rgba(35, 0, 0, 0.5)',
+                            }
                         }]
                     },
                 options: {
