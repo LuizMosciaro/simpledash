@@ -25,11 +25,9 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    - name: Setup API Keys
+    - name: Run Tests
       run: |
         WEATHER_API_KEY: ${{secrets.WEATHER_API_KEY}}
         SECRET_KEY: ${{secrets.SECRET_KEY}}
         ALPHA_AVANTAGE_API: ${{secrets.ALPHA_AVANTAGE_API}}
-    - name: Run Tests
-      run: |
         python manage.py test
