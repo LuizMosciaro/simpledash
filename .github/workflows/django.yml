@@ -26,6 +26,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
+      env:
+          WEATHER_API_KEY: ${{secrets.WEATHER_API_KEY}}
+          SECRET_KEY: ${{secrets.SECRET_KEY}}
+          ALPHA_AVANTAGE_API: ${{secrets.ALPHA_AVANTAGE_API}}
       run: |
         WEATHER_API_KEY: ${{secrets.WEATHER_API_KEY}}
         SECRET_KEY: ${{secrets.SECRET_KEY}}
