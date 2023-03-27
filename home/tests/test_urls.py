@@ -2,8 +2,11 @@ from django.test import TestCase
 from django.urls import reverse, resolve
 from home.views import home
 
-class TestUrls(TestCase):
+class TestUrlHome(TestCase):
     
-    def test_list_url_is_resolved(self):
-        url = reverse('home')
-        self.assertEquals(resolve(url).func,home)
+    def test_home_url_is_resolved(self):
+        url = resolve('/')
+        url2 = resolve('/home')
+        
+        self.assertEquals(url.func,home)
+        self.assertEquals(url2.func,home)
