@@ -1,4 +1,5 @@
 {% load static %}
+<html lang="pt-br">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
@@ -7,305 +8,308 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:wght@200&display=swap" rel="stylesheet">
-    <title>SimpleDashT</title>
+    <title>SimpleDash</title>
 </head>
-
-<div class='container'>
-    <div id='sidebar'>
-        <ul>
-            <li class="logo">
-                <a href="#" class="sidebar-link">
-                    <i class="fa-solid fa-angles-right"></i>
-                    <span class="link-text">Dashboard</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="sidebar-link">
-                    <i class="fa-solid fa-bars"></i>
-                    <span class="link-text" id="adjust-item1">Menu</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="sidebar-link">
-                    <i class="fa-solid fa-chart-pie"></i>
-                    <span class="link-text">Portfolio</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="sidebar-link">
-                    <i class="fa-solid fa-chart-line"></i>
-                    <span class="link-text">Strategies</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="sidebar-link">
-                    <i class="fa-solid fa-wallet"></i>
-                    <span class="link-text">Wallet</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="sidebar-link">
-                    <i class="fa-solid fa-network-wired"></i>
-                    <span class="link-text" id="adjust-item2">Rewards</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="sidebar-link">
-                    <i class="fa-solid fa-chart-simple"></i>
-                    <span class="link-text">Market Analysis</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="sidebar-link">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                    <span class="link-text">Logout</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div id='content1'>
-        <h2>Greetings User!</h2>
-        <h3>At your location the temperature its {{ temp }}ºC with sensation of {{ feelslike }}ºC and relative humidity of {{ humidity }}%, it's also {{ conditions }}.</h3>
-    </div>
-    <!-- <div id='content2'>
-        <table>
-            <tr>
-                <th>Temperature (C)</th>
-                <th>Termic Sensation (C)</th>
-                <th>Humidity</th>
-                <th>Weather Condition</th>
-                <th>Sunrise</th>
-                <th>Sunset</th>
-            </tr>
-            <tr>
-                <td>28.5º</td>
-                <td>31º</td>
-                <td>70%</td>
-                <td>Partly Cloud</td>
-                <td>06:05:15</td>
-                <td>18:11:12</td>
-            </tr>
-        </table> -->
-    <div id='content4'>
-        <li>Perfil</li>
-        <li>
-            <lord-icon
-                src="https://cdn.lordicon.com/ajkxzzfb.json"
-                trigger="hover"
-                colors="primary:#e4e4e4,secondary:#848484"
-                state="hover-looking-around"
-                style="width:50px;height:50px">
-            </lord-icon>
-        </li>
-    </div>
-    <div id='content5'>
-        <h3>SELIC: {{ selic }}</h3>
-        <lord-icon
-            src="https://cdn.lordicon.com/rgyftmhc.json"
-            trigger="hover"
-            colors="primary:#ffffff,secondary:#ffffff"
-            stroke="50"
-            style="width:70px;height:70px">
-        </lord-icon>
-    </div>
-    <div id='content6'>
-        <ul>
-            <li>DÓLAR: R$ {{ dolar }}</li>
-            <li>BITCOIN: R$ {{ btc }}</li>
-        </ul>
-        <div style="margin-bottom: 10px;">
-            <lord-icon
-            src="https://cdn.lordicon.com/qhviklyi.json"
-            trigger="hover"
-            colors="primary:#ffffff,secondary:#e4e4e4"
-            style="width:70px;height:80px">
-        </lord-icon>
+<body>
+    <div class='container'>
+        <div id='sidebar'>
+            <ul>
+                <li class="logo">
+                    <a href="#" class="sidebar-link">
+                        <i class="fa-solid fa-angles-right"></i>
+                        <span class="link-text">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link">
+                        <i class="fa-solid fa-bars"></i>
+                        <span class="link-text" id="adjust-item1">Menu</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span class="link-text">Portfolio</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span class="link-text">Strategies</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link">
+                        <i class="fa-solid fa-wallet"></i>
+                        <span class="link-text">Wallet</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link">
+                        <i class="fa-solid fa-network-wired"></i>
+                        <span class="link-text" id="adjust-item2">Rewards</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link">
+                        <i class="fa-solid fa-chart-simple"></i>
+                        <span class="link-text">Market Analysis</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span class="link-text">Logout</span>
+                    </a>
+                </li>
+            </ul>
         </div>
-    </div>
-    <div id='content7'>
-        <table>
-            <tr>
-                <th>IPCA Mensal</th>
-                <th>IPCA Acumulado</th>
-                <th>IPCA 12 Meses</th>
-            </tr>
-            <tr>
-                <td>{{ montly_inflation }}%</td>
-                <td>{{ ytd_inflation }}%</td>
-                <td>{{ past_12m_inflation }}%</td>
-            </tr>
-        </table>
-    </div>
-    <div id=content8>
-        <h3 style="padding: 10px 0px 5px; margin:unset;">Highest Volumes</h3>
-    {% for data in  stocks_data %}
-        <div class="wrapper">
-            <div class="columnA">
-                <ul>
-                    <form action="" method="POST" id="form-{{ data.stock_symbol }}" style="margin: 0px;">
-                        {% csrf_token %}
-                        <input type="text" id="name" name="name" value="{{ data.stock_name }}" style=" cursor: pointer; font-size: 14px; font-weight: 600; font-family: inherit;border: none; outline: none;  background-color: transparent;" readonly>
-                        <input type="text" id="symbol" name="symbol" value="({{ data.stock_symbol }})" style=" cursor: pointer; font-size: 11px; font-weight: 600; font-family: inherit;border: none; outline: none;  background-color: transparent; padding:0px;" readonly>
-                        <input type="text" value="Sector: {{ data.stock_sector }}" style="cursor: pointer; font-size: 11px; border: none; outline: none;  background-color: transparent; padding:0px;" readonly>
-                        <input type="text" value="Close: R${{ data.stock_close }} Var: {{ data.stock_change }}% " style="cursor: pointer; font-size: 11px; border: none; outline: none;  background-color: transparent; padding:0px; width: 130px; margin:0px;" readonly>
-                        {% if data.stock_change < 0 %}
-                        <i class="fa-solid fa-caret-down" style="color: rgb(180, 0, 0);"></i>
-                        {% elif data.stock_change > 0 %}
-                        <i class="fa-solid fa-caret-up" style="color: rgb(0, 107, 4);"></i>
-                        {% endif %}
-                    </form>
-                    <script>
-                        document.getElementById('form-{{ data.stock_symbol }}').addEventListener('click', function() {
-                            document.getElementById('form-{{ data.stock_symbol }}').submit();
-                        });
-                    </script>
-                </ul>
-            </div>
-            <div class="columnB">
-                <img src="{{ data.stock_logo }}" alt="{{ data.stock_logo }}" style="width: 45px; height:auto; border-radius:5px; border: 1.3px solid black;">
-            </div>
-        </div>  
-        <br>
-    {% endfor %}
-    </div>
-    <div id='content9'>
-        <div class="wrapper">
-            <div class="columnA">
-                <ul>
-                    <li>Contact: Luiz M.</li>
-                    <li>Your IP: {{ ip }}</li>
-                    <li>City: {{ location_city }}</li>
-                    <li>Country: {{ location_country }}</li>
-                </ul>
-            </div>
-            <div class="columnB">
+        <div id='content1'>
+            <h2>Greetings User!</h2>
+            <h3>At your location the temperature its {{ temp }}ºC with sensation of {{ feelslike }}ºC and relative humidity of {{ humidity }}%, it's also {{ conditions }}.</h3>
+        </div>
+        <!-- <div id='content2'>
+            <table>
+                <tr>
+                    <th>Temperature (C)</th>
+                    <th>Termic Sensation (C)</th>
+                    <th>Humidity</th>
+                    <th>Weather Condition</th>
+                    <th>Sunrise</th>
+                    <th>Sunset</th>
+                </tr>
+                <tr>
+                    <td>28.5º</td>
+                    <td>31º</td>
+                    <td>70%</td>
+                    <td>Partly Cloud</td>
+                    <td>06:05:15</td>
+                    <td>18:11:12</td>
+                </tr>
+            </table> -->
+        <div id='content4'>
+            <li>Perfil</li>
+            <li>
                 <lord-icon
-                src="https://cdn.lordicon.com/zzcjjxew.json"
+                    src="https://cdn.lordicon.com/ajkxzzfb.json"
+                    trigger="hover"
+                    colors="primary:#e4e4e4,secondary:#848484"
+                    state="hover-looking-around"
+                    style="width:50px;height:50px">
+                </lord-icon>
+            </li>
+        </div>
+        <div id='content5'>
+            <h3>SELIC: {{ selic }}</h3>
+            <lord-icon
+                src="https://cdn.lordicon.com/rgyftmhc.json"
                 trigger="hover"
-                colors="primary:#000000,secondary:#000000"
-                style="width:50px;height:50px">
+                colors="primary:#ffffff,secondary:#ffffff"
+                stroke="50"
+                style="width:70px;height:70px">
+            </lord-icon>
+        </div>
+        <div id='content6'>
+            <ul>
+                <li>DÓLAR: R$ {{ dolar }}</li>
+                <li>BITCOIN: R$ {{ btc }}</li>
+            </ul>
+            <div style="margin-bottom: 10px;">
+                <lord-icon
+                src="https://cdn.lordicon.com/qhviklyi.json"
+                trigger="hover"
+                colors="primary:#ffffff,secondary:#e4e4e4"
+                style="width:70px;height:80px">
             </lord-icon>
             </div>
         </div>
-    </div>
-    <main>
-        <div class="item-grid">
-            <li>Valor de Mercado</li>
-            <p>R$ {{ td_mkt_value }}</p>
+        <div id='content7'>
+            <table>
+                <tr>
+                    <th>IPCA Mensal</th>
+                    <th>IPCA Acumulado</th>
+                    <th>IPCA 12 Meses</th>
+                </tr>
+                <tr>
+                    <td>{{ montly_inflation }}%</td>
+                    <td>{{ ytd_inflation }}%</td>
+                    <td>{{ past_12m_inflation }}%</td>
+                </tr>
+            </table>
         </div>
-        <div class="item-grid">
-            <li>Nmro de Acoes</li>
-            <p>{{ stock_float }}</p>
+        <div id=content8>
+            <h3 style="padding: 10px 0px 5px; margin:unset;">Highest Volumes</h3>
+        {% for data in  stocks_data %}
+            <div class="wrapper">
+                <div class="columnA">
+                    <ul>
+                        <form action="" method="POST" id="form-{{ data.stock_symbol }}" style="margin: 0px;">
+                            {% csrf_token %}
+                            <input type="text" id="name" name="name" value="{{ data.stock_name }}" style=" cursor: pointer; font-size: 14px; font-weight: 600; font-family: inherit;border: none; outline: none;  background-color: transparent;" readonly>
+                            <input type="text" id="symbol" name="symbol" value="({{ data.stock_symbol }})" style=" cursor: pointer; font-size: 11px; font-weight: 600; font-family: inherit;border: none; outline: none;  background-color: transparent; padding:0px;" readonly>
+                            <input type="text" value="Sector: {{ data.stock_sector }}" style="cursor: pointer; font-size: 11px; border: none; outline: none;  background-color: transparent; padding:0px;" readonly>
+                            <input type="text" value="Close: R${{ data.stock_close }} Var: {{ data.stock_change }}% " style="cursor: pointer; font-size: 11px; border: none; outline: none;  background-color: transparent; padding:0px; width: 130px; margin:0px;" readonly>
+                            {% if data.stock_change < 0 %}
+                            <i class="fa-solid fa-caret-down" style="color: rgb(180, 0, 0);"></i>
+                            {% elif data.stock_change > 0 %}
+                            <i class="fa-solid fa-caret-up" style="color: rgb(0, 107, 4);"></i>
+                            {% endif %}
+                        </form>
+                        <script>
+                            document.getElementById('form-{{ data.stock_symbol }}').addEventListener('click', function() {
+                                document.getElementById('form-{{ data.stock_symbol }}').submit();
+                            });
+                        </script>
+                    </ul>
+                </div>
+                <div class="columnB">
+                    <img src="{{ data.stock_logo }}" alt="{{ data.stock_logo }}" style="width: 45px; height:auto; border-radius:5px; border: 1.3px solid black;">
+                </div>
+            </div>  
+            <br>
+        {% endfor %}
         </div>
-        <div class="item-grid">
-            <li>
-                P/L
-                <lord-icon  class="myli" src="https://cdn.lordicon.com/enzmygww.json" trigger="hover" style="width:15px;height:15px;"></lord-icon>
-                <p class="hide">Mede a relação entre o preço das ações e o lucro por ação nos últimos 12 meses</p>
-            </li>
-            
-            <p>{{ pl }}</p>
-        </div>
-        <div class="item-grid">
-            <li>
-                VPA
-                <lord-icon  class="myli" src="https://cdn.lordicon.com/enzmygww.json" trigger="hover" style="width:15px;height:15px;"></lord-icon>
-                <p class="hide">Patrimônio Líquido dividido pelo número de ações</p>
-            </li>
-            <p>{{ vpa }}</p>
-        </div>
-        <div class="item-grid">
-            <li>
-                ROE
-                <lord-icon  class="myli" src="https://cdn.lordicon.com/enzmygww.json" trigger="hover" style="width:15px;height:15px;"></lord-icon>
-                <p class="hide">Rentabilidade de uma empresa em relação aos recursos próprios investidos</p>
-            </li>
-            <p>{{ roe }}</p>
-        </div>      
-        <div class="chart-price">
-            <div class="chartBox" style="width:auto; height:100%;overflow:hidden;">
-                <canvas id="myChart"></canvas> <!-- Para poder dar resize, precisa estar numa div sozinho -->
+        <div id='content9'>
+            <div class="wrapper">
+                <div class="columnA">
+                    <ul>
+                        <li>Contact: Luiz M.</li>
+                        <li>Your IP: {{ ip }}</li>
+                        <li>City: {{ location_city }}</li>
+                        <li>Country: {{ location_country }}</li>
+                    </ul>
+                </div>
+                <div class="columnB">
+                    <lord-icon
+                    src="https://cdn.lordicon.com/zzcjjxew.json"
+                    trigger="hover"
+                    colors="primary:#000000,secondary:#000000"
+                    style="width:50px;height:50px">
+                </lord-icon>
+                </div>
             </div>
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-animation-delay@1.1.0/dist/chartjs-plugin-animation-delay.min.js"></script>
-            <script>
-                const labels = [{% for item in stock_chart_labels %}"{{ item }}",{% endfor %}];
-                const data = [{% for item in stock_chart_data %}{{ item }}, {% endfor %}];
+        </div>
+        <main>
+            <div class="item-grid">
+                <li>Valor de Mercado</li>
+                <p>R$ {{ td_mkt_value }}</p>
+            </div>
+            <div class="item-grid">
+                <li>Nmro de Acoes</li>
+                <p>{{ stock_float }}</p>
+            </div>
+            <div class="item-grid">
+                <li>
+                    P/L
+                    <lord-icon  class="myli" src="https://cdn.lordicon.com/enzmygww.json" trigger="hover" style="width:15px;height:15px;"></lord-icon>
+                    <p class="hide">Mede a relação entre o preço das ações e o lucro por ação nos últimos 12 meses</p>
+                </li>
                 
-                const totalDuration = 1500;
-                const delayBetweenPoints = totalDuration / data.length;
-                const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
-                const animation = {
-                x: {
-                    type: 'number',
-                    easing: 'linear',
-                    duration: delayBetweenPoints,
-                    from: NaN, // the point is initially skipped
-                    delay(ctx) {
-                    if (ctx.type !== 'data' || ctx.xStarted) {
-                        return 0;
-                    }
-                    ctx.xStarted = true;
-                    return ctx.index * delayBetweenPoints;
-                    }
-                },
-                y: {
-                    type: 'number',
-                    easing: 'linear',
-                    duration: delayBetweenPoints,
-                    from: previousY,
-                    delay(ctx) {
-                    if (ctx.type !== 'data' || ctx.yStarted) {
-                        return 0;
-                    }
-                    ctx.yStarted = true;
-                    return ctx.index * delayBetweenPoints;
-                    }
-                }
-                };
-
-                const ctx = document.getElementById('myChart').getContext('2d');
-                const myChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: "Cotação Diária - Abertura",
-                            data: data,
-                            backgroundColor: 'rgba(130, 130, 130, 0.2)',
-                            borderColor: 'rgba(35, 34, 39, 1)',
-                            borderWidth: 3,
-                            radius: 1,
-                            fill:{
-                                target:'origin',
-                                above:'rgba(0, 0, 50, 0.5)',
-                                below: 'rgba(35, 0, 0, 0.5)',
-                            }
-                        }]
-                    },
-                options: {
-                    animation:animation,
-                    responsive:true,
-                    maintainAspectRatio: false, 
-                    scales: {
-                        x: {
-                            grid: {
-                                display: false
-                            },
-                            ticks: {
-                                display: false
-                            }
-                        },
-                        y: {
-                            grid: {
-                                display: false
-                            },
-                            beginAtZero: true
+                <p>{{ pl }}</p>
+            </div>
+            <div class="item-grid">
+                <li>
+                    VPA
+                    <lord-icon  class="myli" src="https://cdn.lordicon.com/enzmygww.json" trigger="hover" style="width:15px;height:15px;"></lord-icon>
+                    <p class="hide">Patrimônio Líquido dividido pelo número de ações</p>
+                </li>
+                <p>{{ vpa }}</p>
+            </div>
+            <div class="item-grid">
+                <li>
+                    ROE
+                    <lord-icon  class="myli" src="https://cdn.lordicon.com/enzmygww.json" trigger="hover" style="width:15px;height:15px;"></lord-icon>
+                    <p class="hide">Rentabilidade de uma empresa em relação aos recursos próprios investidos</p>
+                </li>
+                <p>{{ roe }}</p>
+            </div>      
+            <div class="chart-price">
+                <div class="chartBox" style="width:auto; height:100%;overflow:hidden;">
+                    <canvas id="myChart"></canvas> <!-- Para poder dar resize, precisa estar numa div sozinho -->
+                </div>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-animation-delay@1.1.0/dist/chartjs-plugin-animation-delay.min.js"></script>
+                <script>
+                    const labels = [{% for item in stock_chart_labels %}"{{ item }}",{% endfor %}];
+                    const data = [{% for item in stock_chart_data %}{{ item }}, {% endfor %}];
+                    
+                    const totalDuration = 1500;
+                    const delayBetweenPoints = totalDuration / data.length;
+                    const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
+                    const animation = {
+                    x: {
+                        type: 'number',
+                        easing: 'linear',
+                        duration: delayBetweenPoints,
+                        from: NaN, // the point is initially skipped
+                        delay(ctx) {
+                        if (ctx.type !== 'data' || ctx.xStarted) {
+                            return 0;
+                        }
+                        ctx.xStarted = true;
+                        return ctx.index * delayBetweenPoints;
                         }
                     },
-                }
-                }); 
-            </script>
-        </div>
-    </main>
-</div>
+                    y: {
+                        type: 'number',
+                        easing: 'linear',
+                        duration: delayBetweenPoints,
+                        from: previousY,
+                        delay(ctx) {
+                        if (ctx.type !== 'data' || ctx.yStarted) {
+                            return 0;
+                        }
+                        ctx.yStarted = true;
+                        return ctx.index * delayBetweenPoints;
+                        }
+                    }
+                    };
+
+                    const ctx = document.getElementById('myChart').getContext('2d');
+                    const myChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: "Cotação Diária - Abertura",
+                                data: data,
+                                backgroundColor: 'rgba(130, 130, 130, 0.2)',
+                                borderColor: 'rgba(35, 34, 39, 1)',
+                                borderWidth: 3,
+                                radius: 1,
+                                fill:{
+                                    target:'origin',
+                                    above:'rgba(0, 0, 50, 0.5)',
+                                    below: 'rgba(35, 0, 0, 0.5)',
+                                }
+                            }]
+                        },
+                    options: {
+                        animation:animation,
+                        responsive:true,
+                        maintainAspectRatio: false, 
+                        scales: {
+                            x: {
+                                grid: {
+                                    display: false
+                                },
+                                ticks: {
+                                    display: false
+                                }
+                            },
+                            y: {
+                                grid: {
+                                    display: false
+                                },
+                                beginAtZero: true
+                            }
+                        },
+                    }
+                    }); 
+                </script>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>
