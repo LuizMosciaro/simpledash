@@ -29,8 +29,31 @@ class HomePageTest(unittest.TestCase):
         self.assertIn('Greetings',div_content1.text)
         self.assertTrue(div_content1)
 
-        #[...continue]
-        print('Finished')
+        #Looking around other elements from the page
+        div_content4 = self.driver.find_element(By.ID,'content4')
+        self.assertTrue(div_content4)
+
+        div_content5 = self.driver.find_element(By.ID,'content5')
+        self.assertTrue(div_content5)
+
+        div_content6 = self.driver.find_element(By.ID,'content6')
+        self.assertTrue(div_content6)
+
+        div_content7 = self.driver.find_element(By.ID,'content7')
+        self.assertTrue(div_content7)
+
+        div_content8 = self.driver.find_element(By.ID,'content8')
+        self.assertTrue(div_content8)
+
+        div_content9 = self.driver.find_element(By.ID,'content9')
+        self.assertTrue(div_content9)
+
+        sidebar = self.driver.find_element(By.ID,'sidebar')
+        self.assertTrue(sidebar)
+
+        div_main = self.driver.find_element(By.XPATH,'//main')
+        self.assertTrue(div_main)
+
 
 if __name__ == '__main__':  
     unittest.main()

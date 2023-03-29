@@ -4,17 +4,10 @@ from pebble import concurrent
 import os
 
 @task
-def build(c,ip=None):
-    if ip:
-        ip_addr = ip
-    else:
-        ip_addr = None
+def build(c):
     @concurrent.thread
-    def runserver(c):
-        if ip_addr:
-            c.run(f'python manage.py runserver {ip_addr}:8091')
-        else:
-            c.run('python manage.py runserver')
+    def runserver():
+        c.run('python manage.py runserver')
         sleep(3)
                     
     @concurrent.thread
