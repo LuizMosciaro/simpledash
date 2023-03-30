@@ -1,7 +1,9 @@
+import os
 from time import sleep
+
 from invoke import task
 from pebble import concurrent
-import os
+
 
 @task
 def build(c):

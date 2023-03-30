@@ -1,13 +1,12 @@
 import os
-import requests
-from datetime import date
-from datetime import datetime
-from bs4 import BeautifulSoup
+import ssl
+from datetime import date, datetime
+
 import requests
 import urllib3
-import ssl
-from workalendar.america import Brazil
+from bs4 import BeautifulSoup
 from dateutil.relativedelta import relativedelta
+from workalendar.america import Brazil
 
 
 class CustomHttpAdapter (requests.adapters.HTTPAdapter):

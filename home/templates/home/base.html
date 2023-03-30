@@ -13,7 +13,7 @@
     <title>{% block title %}SimpleDash{% endblock %}</title>
 </head>
 <body>
-    {% block content %}
+    {% block main %}
     <div class='container'>
         <div id='sidebar'>
             {% block sidenav %}
@@ -71,7 +71,7 @@
                 </div>
             {% endblock %}
         </div>
-        {% block pagecontent %}
+        {% block content %}
         {% endblock %}
     {% endblock %}
 </body>

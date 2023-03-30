@@ -1,7 +1,6 @@
 {% extends 'home/base.html' %}
-{% load static %}
 
-{% block pagecontent %}
+{% block content %}
     <div id='content1'>
         <h2>Greetings User!</h2>
         <h3>At your location the temperature its {{ temp }}ºC with sensation of {{ feelslike }}ºC and relative humidity of {{ humidity }}%, it's also {{ conditions }}.</h3>
@@ -228,5 +227,4 @@
             </script>
         </div>
     </main>
-
 {% endblock %}

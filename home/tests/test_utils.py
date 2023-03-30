@@ -1,13 +1,18 @@
-from django.test import TestCase
-from unittest.mock import patch,Mock
-from pathlib import Path
-from datetime import date,datetime
-import requests
 import os
-import json
+from datetime import datetime
+from http import HTTPStatus
+from unittest.mock import Mock, patch
+
+import requests
 from dateutil.relativedelta import relativedelta
+from django.test import TestCase
 from workalendar.america import Brazil
-from home.utils import get_selic, get_weather, get_ipca, get_legacy_session, get_dolar, get_btc, get_highest_volume_stocks, get_quote, get_historic_prices, get_fundamentals
+
+from home.utils import (get_btc, get_dolar, get_fundamentals,
+                        get_highest_volume_stocks, get_historic_prices,
+                        get_ipca, get_legacy_session, get_quote, get_selic,
+                        get_weather)
+
 
 class WeatherTestCase(TestCase):
 
@@ -17,7 +22,7 @@ class WeatherTestCase(TestCase):
         call = f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{city}?unitGroup=us&key={api_key}&contentType=json"
         response = requests.get(call)
         
-        self.assertEqual(response.status_code,200)
+        self.assertEqual(response.status_code,HTTPStatus.OK)
         self.assertIn('application/json',response.headers['Content-type'])
 
     def test_get_weather(self):
@@ -35,7 +40,7 @@ class SelicTestCase(TestCase):
         url = f'https://api.bcb.gov.br/dados/serie/bcdata.sgs.11/dados?formato=json&dataInicial={today}&dataFinal={today}'
         response = requests.get(url)
         
-        self.assertEqual(response.status_code,200)
+        self.assertEqual(response.status_code,HTTPStatus.OK)
         self.assertIn('application/json',response.headers['Content-Type'])
 
     def test_get_selic(self):
@@ -57,7 +62,7 @@ class IPCATestCase(TestCase):
         url = f'https://servicodados.ibge.gov.br/api/v3/agregados/7060/periodos/{dt}/variaveis/63|69|2265?localidades=N1[all]'
         response = get_legacy_session().get(url)
 
-        self.assertEqual(response.status_code,200)
+        self.assertEqual(response.status_code,HTTPStatus.OK)
         self.assertIn('application/json',response.headers['Content-type'])
 
     @patch('home.utils.get_legacy_session')
@@ -124,7 +129,7 @@ class DolarTestCase(TestCase):
         url = f"https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao='"+ today + "'&$top=100&$format=json&$select=cotacaoCompra"
         response = requests.get(url)
 
-        self.assertEqual(response.status_code,200)
+        self.assertEqual(response.status_code,HTTPStatus.OK)
         self.assertIn('application/json',response.headers['Content-type'])
     
     @patch('requests.get')
@@ -153,7 +158,7 @@ class TestCryptoAPI(TestCase):
         url = 'https://brapi.dev/api/v2/crypto?coin=BTC&currency=BRL'
         response = requests.get(url)
 
-        self.assertEqual(response.status_code,200)
+        self.assertEqual(response.status_code,HTTPStatus.OK)
         self.assertIn('application/json',response.headers['Content-type'])
 
     @patch('requests.get')
@@ -184,7 +189,7 @@ class TestHighestVolumeStocks(TestCase):
         response = requests.get(url)
 
         self.assertIn('application/json',response.headers['Content-type'])
-        self.assertEqual(response.status_code,200)
+        self.assertEqual(response.status_code,HTTPStatus.OK)
     
     @patch('requests.get')
     def test_get_highest_volume_stocks(self,mock_session):
@@ -238,7 +243,7 @@ class GetQuoteTest(TestCase):
         response = requests.get(url=url)
 
         self.assertIn('application/json',response.headers['Content-type'])
-        self.assertEqual(response.status_code,200)
+        self.assertEqual(response.status_code,HTTPStatus.OK)
 
     @patch('requests.get')
     def test_get_quote(self,mock_session):
@@ -319,7 +324,7 @@ class HistoricPricesTestCase(TestCase):
         response = requests.get(url)
 
         self.assertIn('application/json',response.headers['Content-type'])
-        self.assertEqual(response.status_code,200)
+        self.assertEqual(response.status_code,HTTPStatus.OK)
 
     @patch('requests.get')
     def test_get_historic_prices(self,mock_session):
@@ -370,7 +375,7 @@ class FundamentalsTest(TestCase):
         response = requests.get(url,headers=header)
 
         self.assertIn('text/html',response.headers['Content-type'])
-        self.assertEqual(response.status_code,200)
+        self.assertEqual(response.status_code,HTTPStatus.OK)
     
     def test_get_fundamentals(self):
         symbol = 'PETR3'

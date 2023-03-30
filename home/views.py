@@ -1,7 +1,13 @@
-from django.shortcuts import render
 from django.contrib.gis.geoip2 import GeoIP2
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate,login
 from geoip2.errors import AddressNotFoundError
-from .utils import get_weather,get_selic,get_ipca,get_dolar,get_btc,get_highest_volume_stocks,get_fundamentals,get_historic_prices
+
+from .forms import LoginForm
+from .utils import (get_btc, get_dolar, get_fundamentals,
+                    get_highest_volume_stocks, get_historic_prices, get_ipca,
+                    get_selic, get_weather)
+
 
 def home(request):
     try:
@@ -55,3 +61,19 @@ def home(request):
             return render(request,'home/index.html',context)
     
     return render(request,'home/index.html',context)
+
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            pass1 = form.cleaned_data['password']
+            user = authenticate(request,username=username,password=pass1)
+            if user is not None:
+                login(request,user)
+                return redirect('home')
+            else:
+                form.add_error(None,"Invalid credentials")
+    else:
+        form = LoginForm()
+    return render(request,'home/login.html', {'form': form})
