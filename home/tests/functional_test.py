@@ -1,13 +1,12 @@
-import unittest
-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.firefox import GeckoDriverManager
+from django.test import LiveServerTestCase
 
 
-class HomePageTest(unittest.TestCase):
+class HomePageTest(LiveServerTestCase):
 
     def setUp(self):
         options = Options()
@@ -56,6 +55,3 @@ class HomePageTest(unittest.TestCase):
         div_main = self.driver.find_element(By.XPATH,'//main')
         self.assertTrue(div_main)
 
-
-if __name__ == '__main__':  
-    unittest.main()
