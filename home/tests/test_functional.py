@@ -13,7 +13,7 @@ class HomePageTest(LiveServerTestCase):
 
     def setUp(self):
         options = Options()
-        #options.add_argument('-headless')
+        options.add_argument('-headless')
         manager = GeckoDriverManager().install()
         driver = webdriver.Firefox(options=options, service=FirefoxService(manager))
         self.driver = driver
@@ -62,7 +62,7 @@ class LoginViewTest(LiveServerTestCase):
 
     def setUp(self):
         options = Options()
-        #options.add_argument('-headless')
+        options.add_argument('-headless')
         manager = GeckoDriverManager().install()
         driver = webdriver.Firefox(options=options, service=FirefoxService(manager))
         self.driver = driver
@@ -94,7 +94,7 @@ class LoginViewTest(LiveServerTestCase):
 
         #Waits content in the page
         element = EC.presence_of_element_located((By.ID,'content1'))
-        WebDriverWait(self.driver,120).until(element)
+        WebDriverWait(self.driver,100).until(element)
         
         #Assert redirect to home page
         self.assertIn('/home',self.driver.current_url)
