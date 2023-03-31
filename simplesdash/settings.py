@@ -1,6 +1,7 @@
 import os
 import sys
 from pathlib import Path
+
 #from .config import SECRET_KEY_LOCAL
 from dotenv import load_dotenv
 
@@ -88,7 +89,7 @@ DATABASES = {
 }
 
 #Tests coverage
-if 'test' in sys.argv:
+if 'test' in sys.argv or DEBUG is True:
     DATABASES['default'] = DATABASES['local']
 
 # Password validation
@@ -138,3 +139,4 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 GEOIP_PATH = BASE_DIR / 'geoip'
+

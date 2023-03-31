@@ -13,7 +13,7 @@ class HomePageTest(LiveServerTestCase):
 
     def setUp(self):
         options = Options()
-        options.add_argument('-headless')
+        #options.add_argument('-headless')
         manager = GeckoDriverManager().install()
         driver = webdriver.Firefox(options=options, service=FirefoxService(manager))
         self.driver = driver
@@ -62,7 +62,7 @@ class LoginViewTest(LiveServerTestCase):
 
     def setUp(self):
         options = Options()
-        options.add_argument('-headless')
+        #options.add_argument('-headless')
         manager = GeckoDriverManager().install()
         driver = webdriver.Firefox(options=options, service=FirefoxService(manager))
         self.driver = driver
