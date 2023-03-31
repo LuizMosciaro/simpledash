@@ -1,5 +1,3 @@
-from time import sleep
-
 from django.contrib.auth.models import User
 from django.test import LiveServerTestCase
 from selenium import webdriver
@@ -10,7 +8,6 @@ from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.firefox import GeckoDriverManager
-
 
 class HomePageTest(LiveServerTestCase):
 
