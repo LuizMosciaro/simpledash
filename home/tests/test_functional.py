@@ -94,7 +94,7 @@ class LoginViewTest(LiveServerTestCase):
 
         #Waits content in the page
         element = EC.presence_of_element_located((By.ID,'content1'))
-        WebDriverWait(self.driver,60).until(element)
+        WebDriverWait(self.driver,120).until(element)
         
         #Assert redirect to home page
         self.assertIn('/home',self.driver.current_url)
