@@ -78,7 +78,7 @@ def login_view(request):
         form = LoginForm()
     return render(request,'home/login.html', {'form': form})
 
-def signup(request):
+def signup(request): 
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
