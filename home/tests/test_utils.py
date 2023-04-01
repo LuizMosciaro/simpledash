@@ -54,7 +54,7 @@ class IPCATestCase(TestCase):
 
     def test_get_ipca_http_response(self):
         url = f'https://servicodados.ibge.gov.br/api/v3/agregados/7060/periodos/202301/variaveis/63|69|2265?localidades=N1[all]'
-        response = get_legacy_session().get(url)
+        response = get_legacy_session().get(url,timeout=30)
 
         self.assertEqual(response.status_code,HTTPStatus.OK)
         self.assertIn('application/json',response.headers['Content-type'])

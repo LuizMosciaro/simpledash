@@ -18,17 +18,16 @@ class TestHomeView(TestCase):
         self.assertTemplateUsed(response,'home/index.html')
 
     def test_home_sidebar_items_presence(self):
-        response = self.client.get(self.home_url)
-
-        self.assertIn('<title>SimpleDash</title>',response.content.decode())
-        self.assertIn('Dashboard',response.content.decode())
-        self.assertIn('Menu',response.content.decode())
-        self.assertIn('Portfolio',response.content.decode())
-        self.assertIn('Strategies',response.content.decode())
-        self.assertIn('Wallet',response.content.decode())
-        self.assertIn('Rewards',response.content.decode())
-        self.assertIn('Market Analysis',response.content.decode())
-        self.assertIn('Logout',response.content.decode())
+        response = self.client.get(self.home_url).content.decode()
+        self.assertIn('<title>SimpleDash</title>',response)
+        self.assertIn('Dashboard',response)
+        self.assertIn('Menu',response)
+        self.assertIn('Portfolio',response)
+        self.assertIn('Strategies',response)
+        self.assertIn('Wallet',response)
+        self.assertIn('Rewards',response)
+        self.assertIn('Market Analysis',response)
+        self.assertIn('Logout',response)
 
 class TestLoginView(TestCase):
 
