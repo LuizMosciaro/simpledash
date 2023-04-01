@@ -58,8 +58,8 @@ def get_selic():
     return {'selic':f'{(1 + float(interest)/100) ** workdays - 1:.2%}'}
 
 def get_ipca():
-    date_str = datetime.today()
-    date_str = date_str - relativedelta(months=1)
+    date_today = datetime.today()
+    date_str = date_today - relativedelta(months=1)
     if date_str.month < 10:
         dt = f'{date_str.year}0{date_str.month}'
     else:
@@ -68,11 +68,28 @@ def get_ipca():
     url = f'https://servicodados.ibge.gov.br/api/v3/agregados/7060/periodos/{dt}/variaveis/63|69|2265?localidades=N1[all]'
     response = get_legacy_session().get(url)
     dataJson = response.json()
-    context = {
-        'montly_inflation' : dataJson[0]['resultados'][0]['series'][0]['serie'][dt],
-        'ytd_inflation' : dataJson[1]['resultados'][0]['series'][0]['serie'][dt],
-        'past_12m_inflation' : dataJson[2]['resultados'][0]['series'][0]['serie'][dt]
-    }
+    if dataJson:
+        context = {
+            'montly_inflation' : dataJson[0]['resultados'][0]['series'][0]['serie'][dt],
+            'ytd_inflation' : dataJson[1]['resultados'][0]['series'][0]['serie'][dt],
+            'past_12m_inflation' : dataJson[2]['resultados'][0]['series'][0]['serie'][dt]
+        }
+    else:
+        date_str = date_today - relativedelta(months=2)
+        if date_str.month < 10:
+            dt = f'{date_str.year}0{date_str.month}'
+        else:
+            dt = f'{date_str.year}{date_str.month}'
+        
+        url = f'https://servicodados.ibge.gov.br/api/v3/agregados/7060/periodos/{dt}/variaveis/63|69|2265?localidades=N1[all]'
+        response = get_legacy_session().get(url)
+        dataJson = response.json()
+        if dataJson:
+            context = {
+                'montly_inflation' : dataJson[0]['resultados'][0]['series'][0]['serie'][dt],
+                'ytd_inflation' : dataJson[1]['resultados'][0]['series'][0]['serie'][dt],
+                'past_12m_inflation' : dataJson[2]['resultados'][0]['series'][0]['serie'][dt]
+            }
     return context
 
 def get_ipca2():

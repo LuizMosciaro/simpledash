@@ -101,3 +101,44 @@ class LoginViewTest(LiveServerTestCase):
 
         # Assert error message is not present
         self.assertNotIn('Invalid credentials',self.driver.page_source)
+
+class SignUpViewTest(LiveServerTestCase):
+
+    def setUp(self):
+        options = Options()
+        options.add_argument('-headless')
+        manager = GeckoDriverManager().install()
+        driver = webdriver.Firefox(options=options, service=FirefoxService(manager))
+        self.driver = driver
+
+    def tearDown(self):
+        self.driver.quit()
+
+    def test_signup(self):
+        #Checking the page
+        self.driver.get(self.live_server_url + '/signup')
+
+        #Confirm the title
+        self.assertIn('Sign Up',self.driver.title)
+
+        #Filling up the form
+        username = self.driver.find_element(By.NAME,'username')
+        username.send_keys('testuser')
+
+        first_name = self.driver.find_element(By.NAME,'first_name')
+        first_name.send_keys('FirstName')
+
+        last_name = self.driver.find_element(By.NAME,'last_name')
+        last_name.send_keys('LastName')
+
+        email = self.driver.find_element(By.NAME,'email')
+        email.send_keys('test@example.com')
+        
+        password1 = self.driver.find_element(By.NAME,'password1')
+        password1.send_keys('superstrongpassword!9%')
+
+        password2 = self.driver.find_element(By.NAME,'password2')
+        password2.send_keys('superstrongpassword!9%')
+
+        #Sending the user creation form
+        password2.send_keys(Keys.RETURN)
