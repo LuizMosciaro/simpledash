@@ -3,7 +3,7 @@ from http import HTTPStatus
 from django.contrib.auth.models import User
 from django.test import Client, TestCase
 from django.urls import reverse
-
+from home.forms import SignUpForm
 
 class TestHomeView(TestCase):
     
@@ -49,13 +49,100 @@ class TestLoginView(TestCase):
         self.assertIn('<title>Login</title>',response.content.decode())
 
     def test_valid_form_submission(self):
-        url = reverse('login_view')
         data = {'username':'testuser','password':'testpassword'}
-        response = self.client.post(url,data)
+        response = self.client.post(self.login_url,data)
         self.assertRedirects(response,reverse('home'))
     
     def test_invalid_form_submission(self):
-        url = reverse('login_view')
         data = {'username':'testuser','password':'wrongpassword'}
-        response = self.client.post(url,data)
+        response = self.client.post(self.login_url,data)
         self.assertContains(response,'Invalid credentials')
+
+class TestSignUpView(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+        self.signup_url = reverse('signup')
+    
+    def test_signup_get_returns_correct_html(self):
+        response = self.client.get(self.signup_url)
+
+        self.assertEqual(response.status_code,HTTPStatus.OK)
+        self.assertTemplateUsed(response,'home/signup.html')
+        self.assertIn('Sign Up',response.content.decode())
+    
+    def test_signup_form_valid(self):
+        form_data = {
+            'username':'testuser',
+            'first_name':'FirstName',
+            'last_name':'LastName',
+            'email':'testuser@example.com',
+            'password1': '(H&*lhjikW#$%^CEI&*)',
+            'password2': '(H&*lhjikW#$%^CEI&*)',
+        }
+        form = SignUpForm(form_data)
+        
+        self.assertTrue(form.is_valid())
+
+    def test_signup_username_required(self):
+        form_data = {
+            'username':'',
+            'first_name':'FirstName',
+            'last_name':'LastName',
+            'email':'testuser@example.com',
+            'password1': '(H&*lhjikW#$%^CEI&*)',
+            'password2': '(H&*lhjikW#$%^CEI&*)',
+        }
+        form = SignUpForm(form_data)
+
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors['username'],['Este campo é obrigatório.'])
+    
+    def test_signup_email_invalid(self):
+        form_data = {
+            'username':'testuser',
+            'first_name':'FirstName',
+            'last_name':'LastName',
+            'email':'testemail',
+            'password1': '(H&*lhjikW#$%^CEI&*)',
+            'password2': '(H&*lhjikW#$%^CEI&*)',
+        }
+        form = SignUpForm(form_data)
+
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors['email'],['Informe um endereço de email válido.'])
+    
+    def test_signup_password_not_match(self):
+        form_data = {
+            'username':'testuser',
+            'first_name':'FirstName',
+            'last_name':'LastName',
+            'email':'testuser@example.com',
+            'password1': '(H&*lhjikW#$%^CEI&)',
+            'password2': '(H&*lhjikW#$%^CEI&*)',
+        }
+        form = SignUpForm(form_data)
+
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors['password2'],['Os dois campos de senha não correspondem.'])
+
+    def test_signup_create_new_user_and_redirects(self):
+        form_data = {
+            'username':'testuser',
+            'first_name':'FirstName',
+            'last_name':'LastName',
+            'email':'testuser@example.com',
+            'password1': '(H&*lhjikW#$%^CEI&*)',
+            'password2': '(H&*lhjikW#$%^CEI&*)',
+        }
+        form = SignUpForm(form_data)
+
+        self.assertTrue(form.is_valid())
+        user = form.save()
+
+        new_user = User.objects.get(username='testuser')
+        self.assertEqual(new_user.username,user.username)
+
+        response = self.client.post(reverse('signup'), data=form_data)
+        self.assertEqual(response.status_code,HTTPStatus.OK)
+

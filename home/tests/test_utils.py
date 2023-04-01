@@ -53,19 +53,13 @@ class SelicTestCase(TestCase):
 class IPCATestCase(TestCase):
 
     def test_get_ipca_http_response(self):
-        date_str = datetime.today()
-        date_str = date_str - relativedelta(months=1)
-        if date_str.month < 10:
-            dt = f'{date_str.year}0{date_str.month}'
-        else:
-            dt = f'{date_str.year}{date_str.month}'
-        url = f'https://servicodados.ibge.gov.br/api/v3/agregados/7060/periodos/{dt}/variaveis/63|69|2265?localidades=N1[all]'
+        url = f'https://servicodados.ibge.gov.br/api/v3/agregados/7060/periodos/202301/variaveis/63|69|2265?localidades=N1[all]'
         response = get_legacy_session().get(url)
 
         self.assertEqual(response.status_code,HTTPStatus.OK)
         self.assertIn('application/json',response.headers['Content-type'])
 
-    @patch('home.utils.get_legacy_session')
+    @patch('requests.get')
     def test_get_ipca(self,mock_session):
         mock_response = Mock()
         mock_data = [{

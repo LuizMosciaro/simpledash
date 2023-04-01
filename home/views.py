@@ -3,7 +3,7 @@ from django.contrib.gis.geoip2 import GeoIP2
 from django.shortcuts import redirect, render
 from geoip2.errors import AddressNotFoundError
 
-from .forms import LoginForm
+from .forms import LoginForm, SignUpForm
 from .utils import (get_btc, get_dolar, get_fundamentals,
                     get_highest_volume_stocks, get_historic_prices, get_ipca,
                     get_selic, get_weather)
@@ -77,3 +77,14 @@ def login_view(request):
     else:
         form = LoginForm()
     return render(request,'home/login.html', {'form': form})
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login_view')
+    else:
+        form = SignUpForm()
+
+    return render(request,'home/signup.html', {'form':form})
