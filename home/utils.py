@@ -75,12 +75,13 @@ def get_ipca():
             'past_12m_inflation' : dataJson[2]['resultados'][0]['series'][0]['serie'][dt]
         }
     else:
+        date_today = datetime.today()
         date_str = date_today - relativedelta(months=2)
         if date_str.month < 10:
             dt = f'{date_str.year}0{date_str.month}'
         else:
             dt = f'{date_str.year}{date_str.month}'
-        
+
         url = f'https://servicodados.ibge.gov.br/api/v3/agregados/7060/periodos/{dt}/variaveis/63|69|2265?localidades=N1[all]'
         response = get_legacy_session().get(url)
         dataJson = response.json()
