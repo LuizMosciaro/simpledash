@@ -65,13 +65,13 @@ def get_ipca():
         dt = f'{date_str.year}0{date_str.month}'
     else:
         dt = f'{date_str.year}{date_str.month}'
+    print(dt,date_str.day)
     url = f'https://servicodados.ibge.gov.br/api/v3/agregados/7060/periodos/{dt}/variaveis/63|69|2265?localidades=N1[all]'
-    #response = get_legacy_session().get(url)
-    response = requests.get(url)
+    response = get_legacy_session().get(url)
     dataJson = response.json()
     if dataJson:
         context = {
-            'montly_inflation' : dataJson[0]['resultados'][0]['series'][0]['serie'][dt],
+            'monthly_inflation' : dataJson[0]['resultados'][0]['series'][0]['serie'][dt],
             'ytd_inflation' : dataJson[1]['resultados'][0]['series'][0]['serie'][dt],
             'past_12m_inflation' : dataJson[2]['resultados'][0]['series'][0]['serie'][dt]
         }
@@ -93,7 +93,7 @@ def get_ipca2():
     ytd_inf = tds_ytd.get_text().strip().replace(' ','').replace('Noano','').replace('\n','').replace(',','.')[:5]
     
     context = {
-        'montly_inflation': month_inf,
+        'monthly_inflation': month_inf,
         'ytd_inflation': twelve_months_inf,
         'past_12m_inflation': ytd_inf
     }
