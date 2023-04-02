@@ -65,9 +65,9 @@ def get_ipca():
         dt = f'{date_str.year}0{date_str.month}'
     else:
         dt = f'{date_str.year}{date_str.month}'
-    print(dt,date_str.day)
     url = f'https://servicodados.ibge.gov.br/api/v3/agregados/7060/periodos/{dt}/variaveis/63|69|2265?localidades=N1[all]'
-    response = get_legacy_session().get(url,timeout=10)
+    #response = get_legacy_session().get(url)
+    response = requests.get(url)
     dataJson = response.json()
     if dataJson:
         context = {
