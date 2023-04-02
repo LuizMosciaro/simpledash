@@ -3,7 +3,8 @@ from django.contrib.gis.geoip2 import GeoIP2
 from django.shortcuts import redirect, render
 from geoip2.errors import AddressNotFoundError
 
-from .forms import LoginForm, SignUpForm
+from .forms import LoginForm, SignUpForm, NewAssetForm
+from .models import Asset
 from .utils import (get_btc, get_dolar, get_fundamentals,
                     get_highest_volume_stocks, get_historic_prices, get_ipca,
                     get_selic, get_weather)
@@ -88,3 +89,14 @@ def signup(request):
         form = SignUpForm()
 
     return render(request,'home/signup.html', {'form':form})
+
+def investments(request):
+    asset_list = Asset.objects.all()
+    if request.method == 'POST':
+        form = NewAssetForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('investments')
+    else:
+        form = NewAssetForm()
+    return render(request,'home/investments.html',{'asset_list':asset_list,'form':form})

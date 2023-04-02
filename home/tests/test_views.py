@@ -3,7 +3,8 @@ from http import HTTPStatus
 from django.contrib.auth.models import User
 from django.test import Client, TestCase
 from django.urls import reverse
-from home.forms import SignUpForm
+from home.models import Asset
+from home.forms import SignUpForm, NewAssetForm
 
 class TestHomeView(TestCase):
     
@@ -139,9 +140,56 @@ class TestSignUpView(TestCase):
         self.assertTrue(form.is_valid())
         user = form.save()
 
-        new_user = User.objects.get(username='testuser')
-        self.assertEqual(new_user.username,user.username)
+        existing_user = User.objects.get(username='testuser')
+        self.assertEqual(existing_user.username,user.username)
 
         response = self.client.post(reverse('signup'), data=form_data)
         self.assertEqual(response.status_code,HTTPStatus.OK)
 
+class InvestmentsViewTest(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+        self.investments_url = reverse('investments')
+    
+    def test_get_http_and_return_correct_html(self):
+        response = self.client.get(self.investments_url)
+
+        self.assertEqual(response.status_code,HTTPStatus.OK)
+        self.assertTemplateUsed(response,'home/investments.html')
+        self.assertIn('Investments',response.content.decode())
+
+    def test_asset_form_valid(self):
+        form_data = {
+            'symbol':'ABC3',
+            'amount':'100',
+            'operation':'Buy',
+        }
+        form = NewAssetForm(form_data)
+        self.assertTrue(form.is_valid())
+
+    def test_asset_form_fields_required(self):
+        form_data = {
+            'symbol':'',
+            'amount':'',
+            'operation':'',
+        }
+        form = NewAssetForm(form_data)
+
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors['symbol'],['Este campo é obrigatório.'])
+        self.assertEqual(form.errors['amount'],['Este campo é obrigatório.'])
+        self.assertEqual(form.errors['operation'],['Este campo é obrigatório.'])
+    
+    def test_asset_form_add_new_investment(self):
+        form_data = {
+            'symbol':'ABC3',
+            'amount':'100',
+            'operation':'Buy',
+        }
+        form = NewAssetForm(form_data)
+        self.assertTrue(form.is_valid())
+        asset = form.save()
+        
+        existing_asset = Asset.objects.get(symbol='ABC3')
+        self.assertEqual(asset.symbol,existing_asset.symbol)

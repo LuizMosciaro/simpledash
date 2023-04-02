@@ -1,0 +1,38 @@
+{% extends 'home/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Investments{% endblock %}
+
+{% block content %}
+    <h3>Investments Statement</h3>
+    <ul>
+        <h4>Add new investment</h4>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary">Add Asset</button>
+          </form>
+          <!-- <li>{{item.symbol}}</li>
+            <li>{{item.amount}}</li>
+            <li>{{item.operation}}</li>
+            <li>{{item.created_date}}</li> -->
+            <table>
+                <tr>
+                    <th>Symbol</th>
+                    <th>Amount</th>
+                    <th>Operation</th>
+                    <th>Date</th>
+                </tr>
+            {% for item in asset_list %}
+            <tr>
+                <td>{{ item.symbol }}</td>
+                <td>{{ item.amount }}</td>
+                <td>{{ item.operation }}</td>
+                <td>{{ item.created_date }}</td>    
+            </tr>
+            {% empty %}
+                <li>No investment found</li>
+            {% endfor %}
+        </table>
+    </ul>
+{% endblock %}
