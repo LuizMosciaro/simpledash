@@ -120,7 +120,7 @@ class IPCATestCase2(TestCase):
         response = get_legacy_session().get(url)
 
         self.assertEqual(response.status_code,HTTPStatus.OK)
-        self.assertIn('text/html',response.headers['Content-type'])
+        self.assertIn('application/json',response.headers['Content-type'])
 
     @patch('requests.get')
     def test_get_ipca2(self,mock_session):

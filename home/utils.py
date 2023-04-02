@@ -65,7 +65,6 @@ def get_ipca():
         dt = f'{date_str.year}0{date_str.month}'
     else:
         dt = f'{date_str.year}{date_str.month}'
-    print(dt,date_str.day)
     url = f'https://servicodados.ibge.gov.br/api/v3/agregados/7060/periodos/{dt}/variaveis/63|69|2265?localidades=N1[all]'
     response = get_legacy_session().get(url)
     dataJson = response.json()
@@ -81,7 +80,8 @@ def get_ipca():
 
 def get_ipca2():
     header = {'Content-Type': 'text/html; charset=utf-8'}
-    response = requests.get('https://www.ibge.gov.br/indicadores',headers=header)
+    url = 'https://www.ibge.gov.br/indicadores'
+    response = get_legacy_session().get(url,headers=header)
     soup = BeautifulSoup(response.content, 'html.parser')
     tds_ultimos = soup.find('td', class_='ultimo')
     month_inf = tds_ultimos.get_text().strip().replace(' ','').replace('Último','').replace('\n','').replace(',','.')[:5]
