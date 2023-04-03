@@ -193,3 +193,19 @@ class InvestmentsViewTest(TestCase):
         
         existing_asset = Asset.objects.get(symbol='ABC3')
         self.assertEqual(asset.symbol,existing_asset.symbol)
+    
+    def test_asset_form_delete_investment(self):
+        form_data = {
+            'symbol':'ABC3',
+            'amount':'100',
+            'operation':'Buy',
+        }
+        form = NewAssetForm(form_data)
+        self.assertTrue(form.is_valid())
+        form.save()
+        
+        existing_asset = Asset.objects.filter(symbol='ABC3').first()
+        self.assertIsNotNone(existing_asset)
+        existing_asset.delete()
+
+        self.assertIsNone(Asset.objects.filter(symbol='ABC3').first())
