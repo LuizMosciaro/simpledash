@@ -30,19 +30,27 @@ jobs:
           WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           ALPHA_AVANTAGE_API: ${{ secrets.ALPHA_AVANTAGE_API }}
+          FAILED_PYTHON_VERSION: ${{ matrix.python-version }}
       run: |
+        if [ "${{ matrix.python-version }}" = "${{ env.FAILED_PYTHON_VERSION }}"]; then
         python manage.py test
-  
+        else
+          echo "Skipping retry for Python version ${{ matrix.python-version }} since it didn't fail"
+
   retry-failed:
     needs: build
     if: ${{ failure() }}
     runs-on: "ubuntu-latest"
+    strategy:
+      matrix:
+        python-version: ["${{ env.FAILED_PYTHON_VERSION }}"]
     steps:     
-      - name: Retrying
+      - name: Retry Failed Job
         env:
           WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           ALPHA_AVANTAGE_API: ${{ secrets.ALPHA_AVANTAGE_API }}
+          FAILED_PYTHON_VERSION: ${{ matrix.python-version }}
         uses: nick-fields/retry@v2
         with:
             max_attempts: 3
