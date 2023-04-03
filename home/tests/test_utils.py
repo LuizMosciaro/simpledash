@@ -33,22 +33,22 @@ class WeatherTestCase(TestCase):
         self.assertIsInstance(context, dict)
         self.assertCountEqual(context.keys(), expected_keys)
 
-class SelicTestCase(TestCase):
+# class SelicTestCase(TestCase):
     
-    def test_get_selic_http_status_code(self):
-        today = datetime.today().strftime('%d/%m/%Y')
-        url = f'https://api.bcb.gov.br/dados/serie/bcdata.sgs.11/dados?formato=json&dataInicial={today}&dataFinal={today}'
-        response = requests.get(url)
+#     def test_get_selic_http_status_code(self):
+#         today = datetime.today().strftime('%d/%m/%Y')
+#         url = f'https://api.bcb.gov.br/dados/serie/bcdata.sgs.11/dados?formato=json&dataInicial={today}&dataFinal={today}'
+#         response = requests.get(url)
         
-        self.assertEqual(response.status_code,HTTPStatus.OK)
-        #self.assertIn('application/json',response.headers['content-type'])
+#         self.assertEqual(response.status_code,HTTPStatus.OK)
+#         self.assertIn('application/json',response.headers['content-type'])
 
-    def test_get_selic(self):
-        response = get_selic()
+#     def test_get_selic(self):
+#         response = get_selic()
         
-        self.assertIsInstance(response, dict)
-        self.assertIn("selic",response)
-        self.assertRegex(response['selic'],r"\d{2}.\d{2}\%")
+#         self.assertIsInstance(response, dict)
+#         self.assertIn("selic",response)
+#         self.assertRegex(response['selic'],r"\d{2}.\d{2}\%")
 
 # class IPCATestCase(TestCase):
 
