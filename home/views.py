@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.gis.geoip2 import GeoIP2
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from geoip2.errors import AddressNotFoundError
 
 from .forms import LoginForm, SignUpForm, NewAssetForm
@@ -100,3 +100,8 @@ def investments(request):
     else:
         form = NewAssetForm()
     return render(request,'home/investments.html',{'asset_list':asset_list,'form':form})
+
+def delete_asset(request,item_id):
+    asset = get_object_or_404(Asset,id=item_id)
+    asset.delete()
+    return redirect('investments')

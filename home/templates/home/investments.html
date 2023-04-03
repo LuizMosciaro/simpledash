@@ -12,10 +12,6 @@
             {{ form|crispy }}
             <button type="submit" class="btn btn-primary">Add Asset</button>
           </form>
-          <!-- <li>{{item.symbol}}</li>
-            <li>{{item.amount}}</li>
-            <li>{{item.operation}}</li>
-            <li>{{item.created_date}}</li> -->
             <table>
                 <tr>
                     <th>Symbol</th>
@@ -29,6 +25,13 @@
                 <td>{{ item.amount }}</td>
                 <td>{{ item.operation }}</td>
                 <td>{{ item.created_date }}</td>    
+                <td>
+                    <form action="{% url 'delete_asset' item.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="item_id" value="{{ item.id }}">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
             </tr>
             {% empty %}
                 <li>No investment found</li>
