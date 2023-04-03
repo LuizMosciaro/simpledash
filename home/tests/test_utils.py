@@ -23,7 +23,7 @@ class WeatherTestCase(TestCase):
         response = requests.get(call)
         
         self.assertEqual(response.status_code,HTTPStatus.OK)
-        self.assertIn('application/json',response.headers['Content-type'])
+        self.assertIn('application/json',response.headers['content-type'])
 
     def test_get_weather(self):
         city = 'Manaus'
@@ -41,7 +41,7 @@ class SelicTestCase(TestCase):
         response = requests.get(url)
         
         self.assertEqual(response.status_code,HTTPStatus.OK)
-        self.assertIn('application/json',response.headers['Content-Type'])
+        self.assertIn('application/json',response.headers['content-type'])
 
     def test_get_selic(self):
         context = get_selic()
@@ -57,7 +57,7 @@ class IPCATestCase(TestCase):
         response = get_legacy_session().get(url,timeout=100)
 
         self.assertEqual(response.status_code,HTTPStatus.OK)
-        self.assertIn('application/json',response.headers['Content-type'])
+        self.assertIn('application/json',response.headers['content-type'])
 
     @patch('requests.get')
     def test_get_ipca(self,mock_session):
@@ -120,7 +120,7 @@ class IPCATestCase2(TestCase):
         response = get_legacy_session().get(url,timeout=100)
 
         self.assertEqual(response.status_code,HTTPStatus.OK)
-        self.assertIn('application/json',response.headers['Content-type'])
+        self.assertIn('application/json',response.headers['content-type'])
 
     @patch('requests.get')
     def test_get_ipca2(self,mock_session):
@@ -148,7 +148,7 @@ class DolarTestCase(TestCase):
         response = requests.get(url)
 
         self.assertEqual(response.status_code,HTTPStatus.OK)
-        self.assertIn('application/json',response.headers['Content-type'])
+        self.assertIn('application/json',response.headers['content-type'])
     
     @patch('requests.get')
     def test_get_dolar(self,mock_session):
@@ -177,7 +177,7 @@ class TestCryptoAPI(TestCase):
         response = requests.get(url)
 
         self.assertEqual(response.status_code,HTTPStatus.OK)
-        self.assertIn('application/json',response.headers['Content-type'])
+        self.assertIn('application/json',response.headers['content-type'])
 
     @patch('requests.get')
     def test_get_btc_success(self, mock_get):
@@ -206,7 +206,7 @@ class TestHighestVolumeStocks(TestCase):
         url = 'https://brapi.dev/api/quote/list?sortBy=volume&sortOrder=desc&limit=50'
         response = requests.get(url)
 
-        self.assertIn('application/json',response.headers['Content-type'])
+        self.assertIn('application/json',response.headers['content-type'])
         self.assertEqual(response.status_code,HTTPStatus.OK)
     
     @patch('requests.get')
@@ -260,7 +260,7 @@ class GetQuoteTest(TestCase):
         url = f'https://brapi.dev/api/quote/PETR3?range=1d&interval=1d&fundamental=false&dividends=false'
         response = requests.get(url=url)
 
-        self.assertIn('application/json',response.headers['Content-type'])
+        self.assertIn('application/json',response.headers['content-type'])
         self.assertEqual(response.status_code,HTTPStatus.OK)
 
     @patch('requests.get')
@@ -341,7 +341,7 @@ class HistoricPricesTestCase(TestCase):
         url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=PETR3.SAO&apikey={alphaavantage_api}'
         response = requests.get(url)
 
-        self.assertIn('application/json',response.headers['Content-type'])
+        self.assertIn('application/json',response.headers['content-type'])
         self.assertEqual(response.status_code,HTTPStatus.OK)
 
     @patch('requests.get')
@@ -392,7 +392,7 @@ class FundamentalsTest(TestCase):
         url = f'https://www.fundamentus.com.br/detalhes.php?papel=PETR3'
         response = requests.get(url,headers=header)
 
-        self.assertIn('text/html',response.headers['Content-type'])
+        self.assertIn('text/html',response.headers['content-type'])
         self.assertEqual(response.status_code,HTTPStatus.OK)
     
     def test_get_fundamentals(self):

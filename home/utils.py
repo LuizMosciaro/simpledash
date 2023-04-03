@@ -81,7 +81,7 @@ def get_ipca():
 def get_ipca2():
     header = {'Content-Type': 'text/html; charset=utf-8'}
     url = 'https://www.ibge.gov.br/indicadores'
-    response = get_legacy_session().get(url,headers=header)
+    response = get_legacy_session().get(url,headers=header,timeout=100)
     soup = BeautifulSoup(response.content, 'html.parser')
     tds_ultimos = soup.find('td', class_='ultimo')
     month_inf = tds_ultimos.get_text().strip().replace(' ','').replace('Último','').replace('\n','').replace(',','.')[:5]
