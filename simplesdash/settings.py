@@ -1,5 +1,11 @@
 import os
+import sys
 from pathlib import Path
+
+#from .config import SECRET_KEY_LOCAL
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -7,6 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
@@ -16,7 +23,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = ['https://simpledash-production-1f16.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://simpledash-production-350e.up.railway.app','https://stocks.amazondeveloper.com.br','https://www.amazondeveloper.com.br']
 
 # Application definition
 
@@ -29,6 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home',
     'geoip2',
+    "crispy_forms",
+    "crispy_bootstrap4",
 ]
 
 MIDDLEWARE = [
@@ -74,9 +83,16 @@ DATABASES = {
         'PASSWORD': os.getenv('PGPASSWORD'),
         'HOST': os.getenv('PGHOST'),
         'PORT': os.getenv('PGPORT'),
+    },
+    'local': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
+#Tests coverage
+if 'test' in sys.argv or DEBUG is True:
+    DATABASES['default'] = DATABASES['local']
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -125,3 +141,11 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 GEOIP_PATH = BASE_DIR / 'geoip'
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+LOGIN_URL = '/login'
+
+LOGOUT_REDIRECT_URL = '/home'

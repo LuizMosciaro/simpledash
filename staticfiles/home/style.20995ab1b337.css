@@ -1,0 +1,414 @@
+:root {
+  --main-radius:10px;
+  --main-padding:15px;
+  --main-background-color:rgba(35,34,39,1);
+  --secondary-background-color: #929292;
+  --shadow: 10px 10px 13px -3px rgba(4, 4, 4, 0.5);
+  --shadow-rightbar: 5px 3px rgba(0, 0, 0, 0.47);
+  --transition: 400ms;
+}
+
+html,body {
+  margin: 0;
+  margin-right: 20px;
+  background: rgba(12,11,16,1);
+  font-family: 'Asap Condensed';
+  word-spacing: 3px;
+}
+
+body::-webkit-scrollbar {
+  width: .4rem;
+  height: .4rem;
+}
+
+body::-webkit-scrollbar-track {
+  background: gray; 
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #5c5c5c; 
+}
+
+.container {
+  display:grid;
+  height:calc(100vh - 10px); /* 10px=margin*/
+  grid-template-columns: 90px 1fr 1fr 1fr 280px;
+  grid-template-rows: 90px .4fr 2fr 1fr;
+  grid-template-areas:
+    "sidebar content1 content1 content1 content4"
+    "sidebar content5 content6 content7 content8"
+    "sidebar main main main content8"
+    "sidebar main main main content9";
+  grid-gap: .8rem;
+  font-weight: 800;
+  font-size: 13px;
+  text-align: center;
+  transition: var(--transition);
+  color: rgb(255, 255, 255);
+}
+
+main {
+  background: var(--main-background-color);
+  grid-area: main;
+  border-radius: var(--main-radius);
+  padding-top: var(--main-padding);
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  grid-template-rows: 1fr 2fr;
+  grid-gap: .8rem;
+  padding: 10px;
+}
+
+.item-grid {
+  background: var(--secondary-background-color);
+  border-radius: var(--main-radius);
+  border-radius: var(--main-radius);
+  box-shadow: var(--shadow-rightbar);
+  color: black;
+  list-style: none;
+  padding-top: 25px;
+  font-size: large;
+}
+
+.hide {
+  display: none;
+}
+
+.myli:hover + .hide {
+  display: block;
+  color:rgb(72, 72, 72);
+  font-size: 12px;
+}
+
+.item-grid p {
+  font-size: medium;
+}
+
+.chart-price {
+  background: var(--secondary-background-color);
+  border-radius: var(--main-radius);
+  border-radius: var(--main-radius);
+  box-shadow: var(--shadow-rightbar);
+  color: black;
+  grid-column-start: 1;
+  grid-column-end: 6;
+}
+
+#sidebar {
+  grid-area: sidebar;
+  border-top-right-radius: var(--main-radius);
+  border-bottom-right-radius: var(--main-radius);
+  padding-top: var(--main-padding);
+  background: var(--main-background-color);
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 5px;
+}
+
+#sidebar ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  list-style: none;
+  padding-left: 2rem;
+  height: calc(100% - 35px);
+}
+
+#sidebar li {
+  padding: 20px;
+  width: 100%;
+  text-align: left;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  height: 1rem;
+  filter: grayscale(100%) opacity(1);
+  transition: var(--transition);
+}
+
+.sidebar-link i {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  font-size: 1rem;
+}
+
+.link-text {
+  display: none;
+  margin-left: 2rem;
+}
+
+#adjust-item2 {
+  margin: 1.5rem;
+}
+
+#sidebar a {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+
+
+#sidebar li:last-child {
+  margin-top: auto;
+}
+
+.fa-solid {
+  color: rgb(255, 255, 255);
+  transition: var(--transition);
+}
+
+.logo {
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  text-align: center;
+  letter-spacing: 0.2ch;
+  width: 100%;
+}
+
+.logo .link-text {
+  font-size: 17px;
+  letter-spacing: 5px;
+  margin: auto;
+}
+
+.logo i {
+  font-size: 2rem;
+  transform: rotate(0deg);
+  transition: transform var(--transition);
+}
+
+#content1 {
+  grid-area: content1;
+  border-radius: var(--main-radius);
+  padding-top: var(--main-padding);
+  text-align: left;
+}
+
+#content2 {
+  background: var(--main-background-color);
+  grid-area: content2;
+  border-radius: var(--main-radius);
+  padding-top: var(--main-padding);
+  margin-top: 15px;
+}
+
+#content4 {
+  grid-area: content4;
+  border-radius: var(--main-radius);
+  padding-top: var(--main-padding);
+  margin: 15px 10px 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+}
+
+#content4 i {
+  font-size: 2rem;
+}
+
+#content5 {
+  background: var(--main-background-color);
+  grid-area: content5;
+  border-radius: var(--main-radius);
+  padding-top: var(--main-padding);
+}
+
+#content6 {
+  background: var(--main-background-color);
+  grid-area: content6;
+  border-radius: var(--main-radius);
+  padding-top: var(--main-padding);
+  text-align: left;
+}
+
+#content5, #content6 {
+  grid-template-columns: 1fr 1fr;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+}
+
+#content5 i, #content6 i {
+  font-size: 2rem;
+  margin-right: 10px;
+}
+
+#content7 {
+  background: var(--main-background-color);
+  grid-area: content7;
+  border-radius: var(--main-radius);
+  padding-top: var(--main-padding);
+}
+
+#content8 {
+  background: var(--main-background-color);
+  grid-area: content8;
+  border-radius: var(--main-radius);
+  overflow: auto;
+}
+
+#content8::-webkit-scrollbar {
+  width: .4rem;
+  height: .4rem;
+}
+
+#content8::-webkit-scrollbar-track {
+  background: gray; 
+}
+
+#content8::-webkit-scrollbar-thumb {
+  background: #5c5c5c; 
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 165px 1fr;
+  grid-template-rows: 75px;
+  background: var(--secondary-background-color);
+  margin: 0 10px;
+  align-items: center;
+  font-size: 12px;
+  border-radius: var(--main-radius);
+  color: black;
+  box-shadow: var(--shadow-rightbar);
+}
+
+.columnA,.columnB {
+  list-style: none;
+}
+
+.columnA {
+  text-align: left;
+  padding-left: 10px;
+}
+
+.columnB {
+  font-size: 3rem;
+  padding-right: 5px;
+}
+
+#content9 {
+  background: var(--main-background-color);
+  grid-area: content9;
+  border-radius: var(--main-radius);
+  margin: 5px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+table {
+  text-align:center;
+  font-size: 14px;
+  margin: 0 5px;
+  padding: 10px;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+}
+
+th {
+  background: var(--secondary-background-color);
+  color: black;
+  border-radius: 2px;
+  box-shadow: var(--shadow-rightbar);
+  padding: 10px;
+}
+
+td {
+  padding-top: 5px;
+}
+
+@media only screen and (max-width:850px) {
+  html,body {
+    margin: 0 5px;
+  }
+  main,#content9 {
+    margin: unset;
+  }
+  .container {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(6,1fr);
+    grid-template-areas:
+    "content5"
+    "content6"
+    "content7"
+    "main"
+    "content9"
+    "sidebar";
+  }
+  .logo,#content1,#content2,#content3,#content4,#content8 {
+    display: none;
+  }
+  #sidebar {
+    border-radius: var(--main-radius);
+    margin: 0;
+    height: 70px;
+  }
+  #sidebar ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    list-style: none;
+    padding: unset;
+  }
+  #sidebar li {
+    padding: var(--main-padding);
+  }
+  #sidebar li:last-child {
+    margin: 0;
+  }
+  #content7 {
+    width: 100%;
+  }
+  #content7 table {
+    width: 100%;
+    padding: var(--main-padding);
+    border-radius: var(--main-radius);
+  }
+}
+
+@media (hover:hover) {
+  /* In plain English this is saying, “Do something to the .grid container if it contains an element named #sidebar inside 
+  of it that is in a hover state.” That’s why :has() is often referred to as a “parent” selector. 
+  We can finally select a parent based on the children it contains */
+  .container:has(#sidebar:hover) { 
+    grid-template-columns: 220px 1fr 1fr 1fr 280px;
+    grid-template-rows: 90px .4fr 2fr 1fr;
+  }
+  .sidebar-link:hover {
+    filter: grayscale(0%) opacity(1);
+    background: #46464650;
+    border-radius: 10px;
+    height: 30px;
+    padding: 5px;
+  }
+  #sidebar:hover .link-text {
+    display: block;
+    overflow: hidden;
+  }
+  .logo a:hover {
+    background: unset;
+    filter: unset;
+    margin: unset;
+    padding: unset;
+  }
+
+  .sidebar-link i {
+    color: #3939ff;
+  }
+
+  #sidebar:hover .logo i {
+    transform: rotate(90deg);
+  }
+}
