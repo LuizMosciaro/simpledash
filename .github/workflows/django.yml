@@ -38,6 +38,7 @@ jobs:
     if: ${{ failure() }}
     runs-on: ubuntu-latest
     strategy:
+      max-parallel: 1
       matrix:
         FAILED_PYTHON_VERSION: ["3.8", "3.9", "3.10"]
     steps:
