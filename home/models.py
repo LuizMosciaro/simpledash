@@ -6,7 +6,7 @@ class Asset(models.Model):
         ('Sell','Sell')
     ]
     symbol = models.CharField(max_length=200)
-    amount = models.IntegerField()
+    amount = models.FloatField()
     operation = models.CharField(max_length=4, choices=OPTIONS,default='')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)

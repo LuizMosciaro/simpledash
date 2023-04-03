@@ -151,7 +151,20 @@ class InvestmentsViewTest(TestCase):
     def setUp(self):
         self.client = Client()
         self.investments_url = reverse('investments')
-    
+
+        #Creating an user as the view its protected
+        self.user = User.objects.create_user(
+            username='testuser',
+            email='testuser@test.com',
+            password='testpass'
+        )
+        
+        #Login the user
+        self.client.login(
+                username='testuser',
+                password='testpass'
+            )
+
     def test_get_http_and_return_correct_html(self):
         response = self.client.get(self.investments_url)
 

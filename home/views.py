@@ -1,6 +1,8 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse
 from django.contrib.gis.geoip2 import GeoIP2
 from django.shortcuts import redirect, render, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from geoip2.errors import AddressNotFoundError
 
 from .forms import LoginForm, SignUpForm, NewAssetForm
@@ -72,12 +74,20 @@ def login_view(request):
             user = authenticate(request,username=username,password=pass1)
             if user is not None:
                 login(request,user)
-                return redirect('home')
+                next_url = request.GET.get('next')
+                if next_url and next_url != reverse('login_view'):
+                    return redirect(next_url)
+                else:
+                    return redirect('home')
             else:
                 form.add_error(None,"Invalid credentials")
     else:
         form = LoginForm()
     return render(request,'home/login.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')
 
 def signup(request): 
     if request.method == 'POST':
@@ -90,6 +100,7 @@ def signup(request):
 
     return render(request,'home/signup.html', {'form':form})
 
+@login_required
 def investments(request):
     asset_list = Asset.objects.all()
     if request.method == 'POST':

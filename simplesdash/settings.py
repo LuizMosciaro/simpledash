@@ -145,3 +145,7 @@ GEOIP_PATH = BASE_DIR / 'geoip'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+LOGIN_URL = '/login'
+
+LOGOUT_REDIRECT_URL = '/home'

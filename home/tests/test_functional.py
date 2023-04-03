@@ -1,3 +1,4 @@
+import time
 from django.contrib.auth.models import User
 from django.test import LiveServerTestCase
 from selenium import webdriver
@@ -142,3 +143,88 @@ class SignUpViewTest(LiveServerTestCase):
 
         #Assert redirect
         self.assertIn('/login',self.driver.current_url)
+
+class InvestmentsViewTest(LiveServerTestCase):
+    def setUp(self):
+        options = Options()
+        options.add_argument('-headless')
+        manager = GeckoDriverManager().install()
+        driver = webdriver.Firefox(options=options, service=FirefoxService(manager))
+        self.driver = driver
+
+        #Creating the test user
+        self.user = User.objects.create_user(
+            username='testuser',
+            email='testuser@example.com',
+            password='testpassword'
+        )
+
+        #Login the user
+        self.driver.get(self.live_server_url + '/investments')
+        username = self.driver.find_element(By.NAME,'username')
+        username.send_keys('testuser')
+        password = self.driver.find_element(By.NAME,'password')
+        password.send_keys('testpassword')
+        password.send_keys(Keys.RETURN)
+
+        #Waits for element in the login page
+        element = EC.title_contains('Investments')
+        WebDriverWait(self.driver,60).until(element)
+
+    def tearDown(self):
+        self.driver.quit()
+
+    def test_add_new_investment(self):
+        self.driver.get(self.live_server_url + '/investments')
+
+        #Confirm the title
+        self.assertIn('Investments',self.driver.title)
+
+        #Filling the form to add new investment
+        symbol = self.driver.find_element(By.NAME,'symbol')
+        symbol.send_keys('PETR3')
+
+        amount = self.driver.find_element(By.NAME,'amount')
+        amount.send_keys('550.75')
+
+        #Choosing "buy"
+        radio_btn = self.driver.find_element(By.XPATH,'//*[@id="id_operation_0"]')
+        radio_btn.click()
+
+        #Confirm
+        self.driver.find_element(By.XPATH,'/html/body/div/ul/form/button').click()
+
+        #Confirm last element of table was our insertion
+        last_item = self.driver.find_elements(By.XPATH,'//table/tbody/tr[last()]/td')
+        time.sleep(2)
+        self.assertEqual('PETR3', last_item[0].text)
+        self.assertEqual('550,75', last_item[1].text)
+        self.assertEqual('Buy', last_item[2].text)
+        self.assertEqual('Delete', last_item[4].text)
+
+    def test_delete_investment(self):
+        self.driver.get(self.live_server_url + '/investments')
+
+        #Confirm the title
+        self.assertIn('Investments',self.driver.title)
+
+        #Filling the form to add new investment
+        symbol = self.driver.find_element(By.NAME,'symbol')
+        symbol.send_keys('PETR3')
+
+        amount = self.driver.find_element(By.NAME,'amount')
+        amount.send_keys('550.75')
+
+        #Choosing "sell"
+        radio_btn = self.driver.find_element(By.XPATH,'//*[@id="id_operation_1"]')
+        radio_btn.click()
+
+        #Confirm
+        self.driver.find_element(By.XPATH,'/html/body/div/ul/form/button').click()
+
+        #Confirm last element of table was our insertion
+        to_delete_item = self.driver.find_elements(By.XPATH,'//table/tbody/tr[last()]/td')
+        to_delete_item[4].click()
+
+        not_found = self.driver.find_element(By.XPATH,"//*[contains(text(),'No investment found')]").text
+        self.assertIsNotNone(not_found)
