@@ -9,7 +9,7 @@ from geoip2.errors import AddressNotFoundError
 from .forms import LoginForm, SignUpForm, NewAssetForm
 from .models import Asset
 from .utils import (get_btc, get_dolar, get_fundamentals,
-                    get_highest_volume_stocks, get_historic_prices, get_ipca2,
+                    get_highest_volume_stocks, get_historic_prices, get_ipca,
                     get_selic, get_weather)
 
 @cache_page(30000) #+-8.5hrs
@@ -48,7 +48,7 @@ def home(request):
         context.update(get_weather(location_city))
         context.update(get_selic())
         
-    context.update(get_ipca2())
+    context.update(get_ipca())
     context.update(get_dolar())
     context.update(get_btc())
     context.update(get_highest_volume_stocks())
