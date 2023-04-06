@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.contrib.gis.geoip2 import GeoIP2
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import cache_page
 from geoip2.errors import AddressNotFoundError
 
 from .forms import LoginForm, SignUpForm, NewAssetForm
@@ -11,7 +12,7 @@ from .utils import (get_btc, get_dolar, get_fundamentals,
                     get_highest_volume_stocks, get_historic_prices, get_ipca2,
                     get_selic, get_weather)
 
-
+@cache_page(30000) #+-8.5hrs
 def home(request):
     try:
         ip_results = None
