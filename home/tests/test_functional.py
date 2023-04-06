@@ -23,6 +23,10 @@ class HomePageTest(LiveServerTestCase):
         self.driver.quit()
 
     def test_can_check_home_items(self):
+        
+        element = EC.presence_of_element_located((By.ID,'content1'))
+        WebDriverWait(self.driver,100).until(element)
+        
         #Users visit our homepage
         self.driver.get(self.live_server_url)
 
@@ -112,6 +116,9 @@ class SignUpViewTest(LiveServerTestCase):
         #Checking the page
         self.driver.get(self.live_server_url + '/signup')
 
+        element = EC.presence_of_element_located((By.NAME,'username'))
+        WebDriverWait(self.driver,100).until(element)
+
         #Confirm the title
         self.assertIn('Sign Up',self.driver.title)
 
@@ -177,6 +184,9 @@ class InvestmentsViewTest(LiveServerTestCase):
     def test_add_new_investment(self):
         self.driver.get(self.live_server_url + '/investments')
 
+        element = EC.presence_of_element_located((By.NAME,'symbol'))
+        WebDriverWait(self.driver,100).until(element)
+
         #Confirm the title
         self.assertIn('Investments',self.driver.title)
 
@@ -205,6 +215,9 @@ class InvestmentsViewTest(LiveServerTestCase):
     def test_delete_investment(self):
         self.driver.get(self.live_server_url + '/investments')
 
+        element = EC.presence_of_element_located((By.NAME,'symbol'))
+        WebDriverWait(self.driver,100).until(element)
+        
         #Confirm the title
         self.assertIn('Investments',self.driver.title)
 
