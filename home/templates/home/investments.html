@@ -24,7 +24,7 @@
                 <td>{{ item.symbol }}</td>
                 <td>{{ item.amount }}</td>
                 <td>{{ item.operation }}</td>
-                <td>{{ item.created_date }}</td>    
+                <td>{{ item.operation_date }}</td>    
                 <td>
                     <form action="{% url 'delete_asset' item.id %}" method="post">
                         {% csrf_token %}

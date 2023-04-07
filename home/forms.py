@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from datetime import date
 from .models import Asset
+from django.forms.widgets import DateInput
 
 class LoginForm(forms.Form):
     username = forms.CharField(label='Username',max_length=100)
@@ -16,10 +18,15 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('username','first_name','last_name','email','password1','password2',)
 
+
 class NewAssetForm(forms.ModelForm):
     class Meta:
         model = Asset
-        fields = ('symbol','amount','operation',)
+        fields = ('symbol','amount','price','operation_date','operation',)
         widgets = {
                'operation': forms.RadioSelect(),
+               'symbol': forms.TextInput(attrs={'placeholder':'Ex: PETR3'}),
+               'amount': forms.TextInput(attrs={'placeholder':'Shares or Fractions'}),
+               'price': forms.TextInput(attrs={'placeholder':''}),
+               'operation_date': DateInput(attrs={'type': 'date'}),
            } 

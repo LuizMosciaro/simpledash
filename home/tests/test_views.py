@@ -23,12 +23,8 @@ class TestHomeView(TestCase):
         self.assertIn('<title>SimpleDash</title>',response)
         self.assertIn('Dashboard',response)
         self.assertIn('Menu',response)
-        self.assertIn('Portfolio',response)
-        self.assertIn('Strategies',response)
-        self.assertIn('Wallet',response)
-        self.assertIn('Rewards',response)
-        self.assertIn('Market Analysis',response)
-        self.assertIn('Logout',response)
+        self.assertIn('Login',response)
+        self.assertIn('Sign Up',response)
 
 class TestLoginView(TestCase):
 
@@ -51,7 +47,7 @@ class TestLoginView(TestCase):
     def test_valid_form_submission(self):
         data = {'username':'testuser','password':'testpassword'}
         response = self.client.post(self.login_url,data)
-        self.assertRedirects(response,reverse('home'))
+        self.assertEqual(response.status_code,HTTPStatus.OK)
     
     def test_invalid_form_submission(self):
         data = {'username':'testuser','password':'wrongpassword'}
@@ -176,7 +172,9 @@ class InvestmentsViewTest(TestCase):
         form_data = {
             'symbol':'ABC3',
             'amount':'100',
+            'price':'25.76',
             'operation':'Buy',
+            'operation_date':'05/03/2023',
         }
         form = NewAssetForm(form_data)
         self.assertTrue(form.is_valid())
@@ -186,19 +184,25 @@ class InvestmentsViewTest(TestCase):
             'symbol':'',
             'amount':'',
             'operation':'',
+            'price':'',
+            'operation_date':'',
         }
         form = NewAssetForm(form_data)
 
         self.assertFalse(form.is_valid())
         self.assertEqual(form.errors['symbol'],['Este campo é obrigatório.'])
         self.assertEqual(form.errors['amount'],['Este campo é obrigatório.'])
+        self.assertEqual(form.errors['price'],['Este campo é obrigatório.'])
         self.assertEqual(form.errors['operation'],['Este campo é obrigatório.'])
+        self.assertEqual(form.errors['operation_date'],['Este campo é obrigatório.'])
     
     def test_asset_form_add_new_investment(self):
         form_data = {
             'symbol':'ABC3',
             'amount':'100',
+            'price':'25.76',
             'operation':'Buy',
+            'operation_date':'05/03/2023',
         }
         form = NewAssetForm(form_data)
         self.assertTrue(form.is_valid())
@@ -211,7 +215,9 @@ class InvestmentsViewTest(TestCase):
         form_data = {
             'symbol':'ABC3',
             'amount':'100',
+            'price':'25.76',
             'operation':'Buy',
+            'operation_date':'05/03/2023',
         }
         form = NewAssetForm(form_data)
         self.assertTrue(form.is_valid())

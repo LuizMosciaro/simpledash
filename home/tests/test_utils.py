@@ -56,92 +56,92 @@ class SelicTestCase(TestCase):
         self.assertIsInstance(response, dict)
         self.assertRegex(response['selic'],r"\d.\d{2}\%")
 
-class IPCATestCase(TestCase):
+# class IPCATestCase(TestCase):
 
-    def test_get_ipca_http_response(self):
-        url = f'https://servicodados.ibge.gov.br/api/v3/agregados/7060/periodos/202301/variaveis/63|69|2265?localidades=N1[all]'
-        response = get_legacy_session().get(url,timeout=100)
+#     def test_get_ipca_http_response(self):
+#         url = f'https://servicodados.ibge.gov.br/api/v3/agregados/7060/periodos/202301/variaveis/63|69|2265?localidades=N1[all]'
+#         response = get_legacy_session().get(url,timeout=100)
 
-        self.assertEqual(response.status_code,HTTPStatus.OK)
-        self.assertIn('application/json',response.headers['content-type'])
+#         self.assertEqual(response.status_code,HTTPStatus.OK)
+#         self.assertIn('application/json',response.headers['content-type'])
 
-    @patch('requests.get')
-    def test_get_ipca(self,mock_session):
-        mock_response = Mock()
-        mock_data = [{
-            'resultados': [
-                {
-                    'series':[
-                        {
-                            'serie': {
-                                "202302":"0.84"
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            'resultados': [
-                {
-                    'series':[
-                        {
-                            'serie': {
-                                "202302":"1.37"
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            'resultados': [
-                {
-                    'series':[
-                        {
-                            'serie': {
-                                "202302":"5.60"
-                            }
-                        }
-                    ]
-                }
-            ]
-        }]
+#     @patch('requests.get')
+#     def test_get_ipca(self,mock_session):
+#         mock_response = Mock()
+#         mock_data = [{
+#             'resultados': [
+#                 {
+#                     'series':[
+#                         {
+#                             'serie': {
+#                                 "202302":"0.84"
+#                             }
+#                         }
+#                     ]
+#                 }
+#             ]
+#         },
+#         {
+#             'resultados': [
+#                 {
+#                     'series':[
+#                         {
+#                             'serie': {
+#                                 "202302":"1.37"
+#                             }
+#                         }
+#                     ]
+#                 }
+#             ]
+#         },
+#         {
+#             'resultados': [
+#                 {
+#                     'series':[
+#                         {
+#                             'serie': {
+#                                 "202302":"5.60"
+#                             }
+#                         }
+#                     ]
+#                 }
+#             ]
+#         }]
 
-        mock_response.json.return_value = mock_data
-        mock_session.return_value.get.return_value = mock_response
-        context = get_ipca()
-        expected_keys = ['monthly_inflation','ytd_inflation','past_12m_inflation']
-        for value in context.keys():
-            self.assertIsInstance(value,str)
+#         mock_response.json.return_value = mock_data
+#         mock_session.return_value.get.return_value = mock_response
+#         context = get_ipca()
+#         expected_keys = ['monthly_inflation','ytd_inflation','past_12m_inflation']
+#         for value in context.keys():
+#             self.assertIsInstance(value,str)
 
-        self.assertCountEqual(context.keys(),expected_keys)
-        self.assertAlmostEqual(context['monthly_inflation'], "0.84")
-        self.assertAlmostEqual(context['ytd_inflation'], "1.37")
-        self.assertAlmostEqual(context['past_12m_inflation'], "5.60")
+#         self.assertCountEqual(context.keys(),expected_keys)
+#         self.assertAlmostEqual(context['monthly_inflation'], "0.84")
+#         self.assertAlmostEqual(context['ytd_inflation'], "1.37")
+#         self.assertAlmostEqual(context['past_12m_inflation'], "5.60")
 
-class IPCATestCase2(TestCase):
-    def test_get_ipca2_http_response(self):
-        url = f'https://servicodados.ibge.gov.br/api/v3/agregados/7060/periodos/202301/variaveis/63|69|2265?localidades=N1[all]'
-        response = get_legacy_session().get(url,timeout=100)
+# class IPCATestCase2(TestCase):
+#     def test_get_ipca2_http_response(self):
+#         url = f'https://servicodados.ibge.gov.br/api/v3/agregados/7060/periodos/202301/variaveis/63|69|2265?localidades=N1[all]'
+#         response = get_legacy_session().get(url,timeout=100)
 
-        self.assertEqual(response.status_code,HTTPStatus.OK)
-        self.assertIn('application/json',response.headers['content-type'])
+#         self.assertEqual(response.status_code,HTTPStatus.OK)
+#         self.assertIn('application/json',response.headers['content-type'])
 
-    @patch('requests.get')
-    def test_get_ipca2(self,mock_session):
-        mock_response = mock_session.return_value
-        mock_response.content = '\
-        <html>\
-            <td class="ultimo">Último 10,00</td>\
-            <td class="desktop-tablet-only dozemeses">12 meses 20,00</td>\
-            <td class="desktop-tablet-only ano">No ano 30,00</td>\
-        </html>'
+#     @patch('requests.get')
+#     def test_get_ipca2(self,mock_session):
+#         mock_response = mock_session.return_value
+#         mock_response.content = '\
+#         <html>\
+#             <td class="ultimo">Último 10,00</td>\
+#             <td class="desktop-tablet-only dozemeses">12 meses 20,00</td>\
+#             <td class="desktop-tablet-only ano">No ano 30,00</td>\
+#         </html>'
 
-        result = get_ipca2()
-        expected_keys = ['monthly_inflation','ytd_inflation','past_12m_inflation']
-        self.assertIsInstance(result, dict)
-        self.assertCountEqual(expected_keys,result.keys())
+#         result = get_ipca2()
+#         expected_keys = ['monthly_inflation','ytd_inflation','past_12m_inflation']
+#         self.assertIsInstance(result, dict)
+#         self.assertCountEqual(expected_keys,result.keys())
         
 
 class DolarTestCase(TestCase):

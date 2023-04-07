@@ -139,6 +139,11 @@ ul {
   font-size: 1rem;
 }
 
+/* This is the chartpie logo in "Investments" sidebar */
+#sidebar ul li:nth-of-type(3) > a > span {
+  margin-left: 1.7rem;
+}
+
 .link-text {
   display: none;
   margin-left: 2rem;

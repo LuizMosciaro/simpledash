@@ -12,7 +12,7 @@ from .utils import (get_btc, get_dolar, get_fundamentals,
                     get_highest_volume_stocks, get_historic_prices, get_ipca,
                     get_selic, get_weather)
 
-@cache_page(30000) #+-8.5hrs
+@cache_page(7200)
 def home(request):
     try:
         ip_results = None
@@ -36,7 +36,7 @@ def home(request):
         ip_results = None
         pass
     
-    user = 'Luiz'
+    user = 'User'
     price_data = get_historic_prices('petr4')
     context = {
         'user':user,
@@ -48,7 +48,7 @@ def home(request):
         context.update(get_weather(location_city))
         context.update(get_selic())
         
-    context.update(get_ipca())
+    #context.update(get_ipca())
     context.update(get_dolar())
     context.update(get_btc())
     context.update(get_highest_volume_stocks())
@@ -79,7 +79,7 @@ def login_view(request):
                 if next_url and next_url != reverse('login_view'):
                     return redirect(next_url)
                 else:
-                    return redirect('home')
+                    return render(request,'home/index.html',{user:user})
             else:
                 form.add_error(None,"Invalid credentials")
     else:

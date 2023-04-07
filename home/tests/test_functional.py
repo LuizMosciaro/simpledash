@@ -25,7 +25,7 @@ class HomePageTest(LiveServerTestCase):
     def test_can_check_home_items(self):
         
         element = EC.presence_of_element_located((By.ID,'content1'))
-        WebDriverWait(self.driver,100).until(element)
+        WebDriverWait(self.driver,60).until(element)
         
         #Users visit our homepage
         self.driver.get(self.live_server_url)
@@ -117,7 +117,7 @@ class SignUpViewTest(LiveServerTestCase):
         self.driver.get(self.live_server_url + '/signup')
 
         element = EC.presence_of_element_located((By.NAME,'username'))
-        WebDriverWait(self.driver,100).until(element)
+        WebDriverWait(self.driver,60).until(element)
 
         #Confirm the title
         self.assertIn('Sign Up',self.driver.title)
@@ -146,7 +146,7 @@ class SignUpViewTest(LiveServerTestCase):
 
         #Waits for element in the login page
         element = EC.presence_of_element_located((By.CLASS_NAME,'divForm'))
-        WebDriverWait(self.driver,100).until(element)
+        WebDriverWait(self.driver,60).until(element)
 
         #Assert redirect
         self.assertIn('/login',self.driver.current_url)
@@ -185,7 +185,7 @@ class InvestmentsViewTest(LiveServerTestCase):
         self.driver.get(self.live_server_url + '/investments')
 
         element = EC.presence_of_element_located((By.NAME,'symbol'))
-        WebDriverWait(self.driver,100).until(element)
+        WebDriverWait(self.driver,60).until(element)
 
         #Confirm the title
         self.assertIn('Investments',self.driver.title)
@@ -197,27 +197,34 @@ class InvestmentsViewTest(LiveServerTestCase):
         amount = self.driver.find_element(By.NAME,'amount')
         amount.send_keys('550.75')
 
+        amount = self.driver.find_element(By.NAME,'price')
+        amount.send_keys('23.91')
+        
+        amount = self.driver.find_element(By.CSS_SELECTOR,'#id_operation_date')
+        amount.send_keys('2023-01-05') #To work must be this format yyyy-mm-dd
+        time.sleep(5)
         #Choosing "buy"
         radio_btn = self.driver.find_element(By.XPATH,'//*[@id="id_operation_0"]')
         radio_btn.click()
 
         #Confirm
-        self.driver.find_element(By.XPATH,'/html/body/div/ul/form/button').click()
+        self.driver.find_element(By.CSS_SELECTOR,'body > div > ul > form > button').click()
 
         #Confirm last element of table was our insertion
         last_item = self.driver.find_elements(By.XPATH,'//table/tbody/tr[last()]/td')
-        time.sleep(2)
+
         self.assertEqual('PETR3', last_item[0].text)
         self.assertEqual('550,75', last_item[1].text)
         self.assertEqual('Buy', last_item[2].text)
+        self.assertEqual('5 de Janeiro de 2023', last_item[3].text)
         self.assertEqual('Delete', last_item[4].text)
 
     def test_delete_investment(self):
         self.driver.get(self.live_server_url + '/investments')
 
         element = EC.presence_of_element_located((By.NAME,'symbol'))
-        WebDriverWait(self.driver,100).until(element)
-        
+        WebDriverWait(self.driver,60).until(element)
+
         #Confirm the title
         self.assertIn('Investments',self.driver.title)
 
@@ -228,16 +235,22 @@ class InvestmentsViewTest(LiveServerTestCase):
         amount = self.driver.find_element(By.NAME,'amount')
         amount.send_keys('550.75')
 
-        #Choosing "sell"
-        radio_btn = self.driver.find_element(By.XPATH,'//*[@id="id_operation_1"]')
+        amount = self.driver.find_element(By.NAME,'price')
+        amount.send_keys('23.91')
+        
+        amount = self.driver.find_element(By.NAME,'operation_date')
+        amount.send_keys('2023-01-05') #To work must be this format yyyy-mm-dd
+
+        #Choosing "buy"
+        radio_btn = self.driver.find_element(By.XPATH,'//*[@id="id_operation_0"]')
         radio_btn.click()
 
         #Confirm
-        self.driver.find_element(By.XPATH,'/html/body/div/ul/form/button').click()
+        self.driver.find_element(By.CSS_SELECTOR,'body > div > ul > form > button').click()
 
         #Confirm last element of table was our insertion
-        to_delete_item = self.driver.find_elements(By.XPATH,'//table/tbody/tr[last()]/td')
-        to_delete_item[4].click()
+        to_delete_item = self.driver.find_element(By.XPATH,'//table/tbody/tr[last()]/td[5]')
+        to_delete_item.click()
 
         not_found = self.driver.find_element(By.XPATH,"//*[contains(text(),'No investment found')]").text
         self.assertIsNotNone(not_found)

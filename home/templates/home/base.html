@@ -18,58 +18,77 @@
     <div class='container'>
         <div id='sidebar'>
             {% block sidenav %}
-                <div id='sidebar'>
-                    <ul>
-                        <li class="logo">
-                            <a href="#" class="sidebar-link">
-                                <i class="fa-solid fa-angles-right"></i>
-                                <span class="link-text">Dashboard</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="sidebar-link">
-                                <i class="fa-solid fa-bars"></i>
-                                <span class="link-text" id="adjust-item1">Menu</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="sidebar-link">
-                                <i class="fa-solid fa-chart-pie"></i>
-                                <span class="link-text">Portfolio</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="sidebar-link">
-                                <i class="fa-solid fa-chart-line"></i>
-                                <span class="link-text">Strategies</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="sidebar-link">
-                                <i class="fa-solid fa-wallet"></i>
-                                <span class="link-text">Wallet</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="sidebar-link">
-                                <i class="fa-solid fa-network-wired"></i>
-                                <span class="link-text" id="adjust-item2">Rewards</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="sidebar-link">
-                                <i class="fa-solid fa-chart-simple"></i>
-                                <span class="link-text">Market Analysis</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="sidebar-link">
-                                <i class="fa-solid fa-right-from-bracket"></i>
-                                <span class="link-text">Logout</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                {% if user.is_authenticated %}
+                    <div id='sidebar'>
+                        <ul>
+                            <li class="logo">
+                                <a href="#" class="sidebar-link">
+                                    <i class="fa-solid fa-angles-right"></i>
+                                    <span class="link-text">Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/home" class="sidebar-link">
+                                    <i class="fa-solid fa-bars"></i>
+                                    <span class="link-text" id="adjust-item1">Menu</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/investments" class="sidebar-link">
+                                    <i class="fa-solid fa-chart-pie"></i>
+                                    <span class="link-text">Investments</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="sidebar-link">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                    <span class="link-text">Strategies</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="sidebar-link">
+                                    <i class="fa-solid fa-wallet"></i>
+                                    <span class="link-text">Wallet</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/logout" class="sidebar-link">
+                                    <i class="fa-regular fa-circle-xmark"></i>
+                                    <span class="link-text">Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    {% else %}
+                    <div id='sidebar'>
+                        <ul>
+                            <li class="logo">
+                                <a href="#" class="sidebar-link">
+                                    <i class="fa-solid fa-angles-right"></i>
+                                    <span class="link-text">Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/home" class="sidebar-link">
+                                    <i class="fa-solid fa-bars"></i>
+                                    <span class="link-text" id="adjust-item1">Menu</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/login" class="sidebar-link">
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                    <span class="link-text">Login</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/signup" class="sidebar-link">
+                                    <i class="fa-solid fa-arrow-up"></i>
+                                    <span class="link-text">Sign Up</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    {% endif %}
             {% endblock %}
         </div>
         {% block content %}
