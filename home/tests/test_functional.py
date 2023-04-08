@@ -1,4 +1,3 @@
-import time
 from django.contrib.auth.models import User
 from django.test import LiveServerTestCase
 from selenium import webdriver
@@ -9,6 +8,7 @@ from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.firefox import GeckoDriverManager
+
 
 class HomePageTest(LiveServerTestCase):
 
@@ -24,11 +24,11 @@ class HomePageTest(LiveServerTestCase):
 
     def test_can_check_home_items(self):
         
-        element = EC.presence_of_element_located((By.ID,'content1'))
-        WebDriverWait(self.driver,60).until(element)
-        
         #Users visit our homepage
         self.driver.get(self.live_server_url)
+        
+        element = EC.presence_of_element_located((By.ID,'content1'))
+        WebDriverWait(self.driver,60).until(element)
 
         #The users see the browser title
         self.assertIn('SimpleDash',self.driver.title)
@@ -202,7 +202,7 @@ class InvestmentsViewTest(LiveServerTestCase):
         
         amount = self.driver.find_element(By.CSS_SELECTOR,'#id_operation_date')
         amount.send_keys('2023-01-05') #To work must be this format yyyy-mm-dd
-        time.sleep(5)
+
         #Choosing "buy"
         radio_btn = self.driver.find_element(By.XPATH,'//*[@id="id_operation_0"]')
         radio_btn.click()
