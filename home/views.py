@@ -9,52 +9,15 @@ from django.http import JsonResponse
 
 from .forms import LoginForm, NewAssetForm, SignUpForm
 from .models import Asset
-from .utils import (get_btc, get_dolar, get_fundamentals,
+from .utils import (get_btc, get_dolar, get_home_api_calls, get_fundamentals,
                     get_highest_volume_stocks, get_historic_prices, get_ipca2,
                     get_selic, get_weather)
 
 
 @cache_page(7200)
 def home(request):
-    try:
-        ip_results = None
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[0]
-        else:
-            ip = request.META.get('REMOTE_ADDR')
-        
-        g = GeoIP2()
-        location = g.city(ip)
-        location_country = location["country_name"]
-        location_city = location["city"]
-        ip_results = {
-            "ip": ip,
-            "location_country": location_country,
-            "location_city": location_city,
-        }
-        
-    except AddressNotFoundError:
-        ip_results = None
-        pass
-    
-    user = 'User'
-    price_data = get_historic_prices('petr4')
-    context = {
-        'user':user,
-        "stock_chart_labels": price_data["labels"],
-        "stock_chart_data": price_data["data"],
-    }
-    if ip_results:
-        context.update(ip_results)
-        context.update(get_weather(location_city))
-        context.update(get_selic())
-        
-    context.update(get_ipca2())
-    context.update(get_dolar())
-    context.update(get_btc())
-    context.update(get_highest_volume_stocks())
-    context.update(get_fundamentals('petr4'))
+
+    context = get_home_api_calls(request)
     
     if request.method == 'POST':
         if "symbol" in request.POST:
@@ -81,7 +44,9 @@ def login_view(request):
                 if next_url and next_url != reverse('login_view'):
                     return redirect(next_url)
                 else:
-                    return render(request,'home/index.html',{user:user})
+                    context = get_home_api_calls(request)
+                    context.update({user:user})
+                    return render(request,'home/index.html',context)
             else:
                 form.add_error(None,"Invalid credentials")
     else:
