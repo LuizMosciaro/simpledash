@@ -1,16 +1,17 @@
 from django.contrib.auth import authenticate, login, logout
-from django.urls import reverse
-from django.contrib.gis.geoip2 import GeoIP2
-from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib.gis.geoip2 import GeoIP2
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.views.decorators.cache import cache_page
 from geoip2.errors import AddressNotFoundError
 
-from .forms import LoginForm, SignUpForm, NewAssetForm
+from .forms import LoginForm, NewAssetForm, SignUpForm
 from .models import Asset
 from .utils import (get_btc, get_dolar, get_fundamentals,
                     get_highest_volume_stocks, get_historic_prices, get_ipca,
                     get_selic, get_weather)
+
 
 @cache_page(7200)
 def home(request):

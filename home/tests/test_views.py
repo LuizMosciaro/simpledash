@@ -3,8 +3,10 @@ from http import HTTPStatus
 from django.contrib.auth.models import User
 from django.test import Client, TestCase
 from django.urls import reverse
+
+from home.forms import NewAssetForm, SignUpForm
 from home.models import Asset
-from home.forms import SignUpForm, NewAssetForm
+
 
 class TestHomeView(TestCase):
     
