@@ -124,7 +124,7 @@ class IPCATestCase2(TestCase):
     def test_get_ipca2_http_response(self):
         url = f'https://www.ibge.gov.br/indicadores'
         response = get_legacy_session().get(url,timeout=100)
-
+        
         self.assertEqual(response.status_code,HTTPStatus.OK)
         self.assertTrue(response.content.decode())
 
