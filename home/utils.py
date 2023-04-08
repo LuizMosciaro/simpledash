@@ -85,13 +85,13 @@ def get_ipca2():
     response = get_legacy_session().get(url,headers=header,timeout=100)
     soup = BeautifulSoup(response.content, 'html.parser')
     tds_ultimos = soup.find('td', class_='ultimo')
-    month_inf = tds_ultimos.get_text().strip().replace(' ','').replace('Último','').replace('\n','').replace(',','.')[:5]
+    month_inf = tds_ultimos.get_text().strip().replace(' ','').replace('Último','').replace('\n','').replace(',','.')[1:5]
 
     tds_12months = soup.find('td', class_='desktop-tablet-only dozemeses')
-    twelve_months_inf = tds_12months.get_text().strip().replace(' ','').replace('12meses','').replace('\n','').replace(',','.')[:5]
+    twelve_months_inf = tds_12months.get_text().strip().replace(' ','').replace('12meses','').replace('\n','').replace(',','.')[1:5]
 
     tds_ytd = soup.find('td', class_='desktop-tablet-only ano')
-    ytd_inf = tds_ytd.get_text().strip().replace(' ','').replace('Noano','').replace('\n','').replace(',','.')[:5]
+    ytd_inf = tds_ytd.get_text().strip().replace(' ','').replace('Noano','').replace('\n','').replace(',','.')[1:5]
     
     context = {
         'monthly_inflation': month_inf,
