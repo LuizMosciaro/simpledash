@@ -36,8 +36,7 @@ class WeatherTestCase(TestCase):
 class SelicTestCase(TestCase):
     
     def test_get_selic_http_status_code(self):
-        today = datetime.today().strftime('%d/%m/%Y')
-        url = f'https://api.bcb.gov.br/dados/serie/bcdata.sgs.11/dados?formato=json&dataInicial={today}&dataFinal={today}'
+        url = f'https://api.bcb.gov.br/dados/serie/bcdata.sgs.11/dados?formato=json&dataInicial=10-03-2023&dataFinal=10-03-2023'
         response = requests.get(url)
         
         self.assertEqual(response.status_code,HTTPStatus.OK)

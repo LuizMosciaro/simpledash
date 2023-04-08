@@ -25,7 +25,7 @@ class HomePageTest(LiveServerTestCase):
     def test_can_check_home_items(self):
         
         #Users visit our homepage
-        self.driver.get(self.live_server_url)
+        self.driver.get(self.live_server_url + '/home')
         
         element = EC.presence_of_element_located((By.ID,'content1'))
         WebDriverWait(self.driver,60).until(element)
