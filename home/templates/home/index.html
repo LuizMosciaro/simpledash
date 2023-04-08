@@ -12,7 +12,7 @@
         {% else %}
             <h2>Greetings!</h2>
         {% endif %}
-        <h3>At your location the temperature its {{ temp }}ºC with sensation of {{ feelslike }}ºC and relative humidity of {{ humidity }}%, it's also {{ conditions }}.</h3>
+        <h3>At your location the temperature its {{ temp }}ºC {% if feelslike != temp %}with sensation of {{ feelslike }}ºC{% endif %} and relative humidity of {{ humidity }}%, it's also {{ conditions }}.</h3>
     </div>
     <div id='content4'>
         <li>Perfil</li>
