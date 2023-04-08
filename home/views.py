@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.cache import cache_page
 from geoip2.errors import AddressNotFoundError
+from django.http import JsonResponse
 
 from .forms import LoginForm, NewAssetForm, SignUpForm
 from .models import Asset
@@ -113,6 +114,21 @@ def investments(request):
     else:
         form = NewAssetForm()
     return render(request,'home/investments.html',{'asset_list':asset_list,'form':form})
+
+@login_required
+def consult_investments(request,item_id):
+    if request.method == 'GET':
+        asset = get_object_or_404(Asset,id=item_id)
+        asset_data = {
+            'symbol': asset.symbol,
+            'amount': asset.amount,
+            'price': asset.price,
+            'operation': asset.operation,
+            'operation_date': asset.operation_date,
+            'created_date': asset.created_date,
+            'updated_date': asset.updated_date,
+        }
+    return JsonResponse(asset_data)
 
 def delete_asset(request,item_id):
     asset = get_object_or_404(Asset,id=item_id)
