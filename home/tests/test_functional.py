@@ -27,7 +27,7 @@ class HomePageTest(LiveServerTestCase):
         #Users visit our homepage
         self.driver.get(self.live_server_url + '/home')
         
-        element = EC.presence_of_element_located((By.ID,'content1'))
+        element = EC.visibility_of_element_located((By.ID,'content1'))
         WebDriverWait(self.driver,60).until(element)
 
         #The users see the browser title
@@ -116,7 +116,7 @@ class SignUpViewTest(LiveServerTestCase):
         #Checking the page
         self.driver.get(self.live_server_url + '/signup')
 
-        element = EC.presence_of_element_located((By.NAME,'username'))
+        element = EC.visibility_of_element_located((By.NAME,'username'))
         WebDriverWait(self.driver,60).until(element)
 
         #Confirm the title
@@ -145,7 +145,7 @@ class SignUpViewTest(LiveServerTestCase):
         password2.send_keys(Keys.RETURN)
 
         #Waits for element in the login page
-        element = EC.presence_of_element_located((By.CLASS_NAME,'divForm'))
+        element = EC.visibility_of_element_located((By.CLASS_NAME,'divForm'))
         WebDriverWait(self.driver,60).until(element)
 
         #Assert redirect
@@ -184,7 +184,7 @@ class InvestmentsViewTest(LiveServerTestCase):
     def test_add_new_investment(self):
         self.driver.get(self.live_server_url + '/investments')
 
-        element = EC.presence_of_element_located((By.NAME,'symbol'))
+        element = EC.visibility_of_element_located((By.NAME,'symbol'))
         WebDriverWait(self.driver,60).until(element)
 
         #Confirm the title
@@ -222,7 +222,7 @@ class InvestmentsViewTest(LiveServerTestCase):
     def test_delete_investment(self):
         self.driver.get(self.live_server_url + '/investments')
 
-        element = EC.presence_of_element_located((By.NAME,'symbol'))
+        element = EC.visibility_of_element_located((By.NAME,'symbol'))
         WebDriverWait(self.driver,60).until(element)
 
         #Confirm the title
