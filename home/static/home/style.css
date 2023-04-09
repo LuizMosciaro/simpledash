@@ -23,10 +23,12 @@ body::-webkit-scrollbar {
 
 body::-webkit-scrollbar-track {
   background: gray; 
+  border-radius: --main-radius;
 }
 
 body::-webkit-scrollbar-thumb {
   background: #5c5c5c; 
+
 }
 
 .container {
@@ -263,16 +265,20 @@ ul {
 }
 
 #content8::-webkit-scrollbar {
-  width: .4rem;
-  height: .4rem;
+  width: .5rem;
+  height: .5rem;
 }
 
 #content8::-webkit-scrollbar-track {
   background: gray; 
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
 }
 
 #content8::-webkit-scrollbar-thumb {
   background: #5c5c5c; 
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
 }
 
 .wrapper {
