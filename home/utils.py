@@ -104,12 +104,7 @@ def get_ipca2():
         }
         return context
     except requests.exceptions.ConnectTimeout:
-        context = {
-            'monthly_inflation': 'null',
-            'ytd_inflation': 'null',
-            'past_12m_inflation': 'null'
-        }
-        return context
+        pass
 
 def get_last_business_day():
     today = datetime.today().date()
