@@ -18,7 +18,7 @@ from .utils import (get_btc, get_dolar, get_home_api_calls, get_fundamentals,
 def home(request):
 
     context = get_home_api_calls(request)
-    
+
     if request.method == 'POST':
         if "symbol" in request.POST:
             ticker = str(request.POST['symbol']).replace("(","").replace(")","")
@@ -45,7 +45,7 @@ def login_view(request):
                     return redirect(next_url)
                 else:
                     context = get_home_api_calls(request)
-                    context.update({user:user})
+                    context.update({'user':user})
                     return render(request,'home/index.html',context)
             else:
                 form.add_error(None,"Invalid credentials")
