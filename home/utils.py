@@ -83,25 +83,28 @@ def get_ipca():
     return context
 
 def get_ipca2():
-    header = {'Content-Type': 'text/html; charset=utf-8'}
-    url = 'https://www.ibge.gov.br/indicadores'
-    response = get_legacy_session().get(url,headers=header,timeout=100)
-    soup = BeautifulSoup(response.content, 'html.parser')
-    tds_ultimos = soup.find('td', class_='ultimo')
-    month_inf = tds_ultimos.get_text().strip().replace(' ','').replace('Último','').replace('\n','').replace(',','.')[1:5]
+    try:
+        header = {'Content-Type': 'text/html; charset=utf-8'}
+        url = 'https://www.ibge.gov.br/indicadores'
+        response = get_legacy_session().get(url,headers=header,timeout=100)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        tds_ultimos = soup.find('td', class_='ultimo')
+        month_inf = tds_ultimos.get_text().strip().replace(' ','').replace('Último','').replace('\n','').replace(',','.')[1:5]
 
-    tds_12months = soup.find('td', class_='desktop-tablet-only dozemeses')
-    twelve_months_inf = tds_12months.get_text().strip().replace(' ','').replace('12meses','').replace('\n','').replace(',','.')[1:5]
+        tds_12months = soup.find('td', class_='desktop-tablet-only dozemeses')
+        twelve_months_inf = tds_12months.get_text().strip().replace(' ','').replace('12meses','').replace('\n','').replace(',','.')[1:5]
 
-    tds_ytd = soup.find('td', class_='desktop-tablet-only ano')
-    ytd_inf = tds_ytd.get_text().strip().replace(' ','').replace('Noano','').replace('\n','').replace(',','.')[1:5]
-    
-    context = {
-        'monthly_inflation': month_inf,
-        'ytd_inflation': twelve_months_inf,
-        'past_12m_inflation': ytd_inf
-    }
-    return context
+        tds_ytd = soup.find('td', class_='desktop-tablet-only ano')
+        ytd_inf = tds_ytd.get_text().strip().replace(' ','').replace('Noano','').replace('\n','').replace(',','.')[1:5]
+        
+        context = {
+            'monthly_inflation': month_inf,
+            'ytd_inflation': twelve_months_inf,
+            'past_12m_inflation': ytd_inf
+        }
+        return context
+    except requests.exceptions.ConnectTimeout:
+        pass
 
 def get_last_business_day():
     today = datetime.today().date()
