@@ -245,7 +245,7 @@ def get_home_api_calls(request):
             ip_results = None
             pass
         
-        user = 'User'
+        user = None
         price_data = get_historic_prices('petr4')
         context = {
             'user':user,
