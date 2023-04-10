@@ -257,7 +257,7 @@ class GetQuoteTest(TestCase):
     
     def test_get_quote_http_response(self):
         url = f'https://brapi.dev/api/quote/PETR3?range=1d&interval=1d&fundamental=false&dividends=false'
-        response = requests.get(url=url)
+        response = requests.get(url)
 
         self.assertTrue(response.json())
         self.assertEqual(response.status_code,HTTPStatus.OK)

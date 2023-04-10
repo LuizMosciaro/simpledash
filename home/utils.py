@@ -32,6 +32,11 @@ def get_legacy_session():
     session.mount('https://', CustomHttpAdapter(ctx))
     return session
 
+def get_last_business_day():
+    today = datetime.today().date()
+    last_business_day = np.busday_offset(today, -1, roll='backward')
+    return str(last_business_day)
+
 def get_weather(city):
     api_key = os.getenv('WEATHER_API_KEY')
     call = f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{city}?unitGroup=us&key={api_key}&contentType=json"
@@ -55,7 +60,8 @@ def get_weather(city):
 def get_selic():
     workdays = Brazil().get_working_days_delta(
         date(date.today().year, 1, 1), date(date.today().year, 12, 31))
-    today = datetime.today().strftime('%d/%m/%Y')
+    dt = get_last_business_day()
+    today = datetime.strptime(dt,'%Y-%m-%d').strftime('%m-%d-%Y')
     url = f'https://api.bcb.gov.br/dados/serie/bcdata.sgs.11/dados?formato=json&dataInicial={today}&dataFinal={today}'
     response = requests.get(url)
     interest = response.json()[0]['valor']
@@ -110,12 +116,6 @@ def get_ipca2():
             'past_12m_inflation': 'null'
         }
         return context
-
-
-def get_last_business_day():
-    today = datetime.today().date()
-    last_business_day = np.busday_offset(today, -1, roll='backward')
-    return str(last_business_day)
 
 def get_dolar():
     dt = get_last_business_day()
