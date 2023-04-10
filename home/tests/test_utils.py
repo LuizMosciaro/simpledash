@@ -1,17 +1,14 @@
 import os
-from datetime import datetime
 from http import HTTPStatus
 from unittest.mock import Mock, patch
 
 import requests
-from dateutil.relativedelta import relativedelta
 from django.test import TestCase
-from workalendar.america import Brazil
 
 from home.utils import (get_btc, get_dolar, get_fundamentals,
                         get_highest_volume_stocks, get_historic_prices,
-                        get_ipca, get_ipca2, get_legacy_session, get_quote,
-                        get_selic, get_weather)
+                        get_ipca2, get_quote,
+                        get_selic, get_weather,get_last_business_day)
 
 
 class WeatherTestCase(TestCase):
@@ -140,8 +137,7 @@ class IPCATestCase2(TestCase):
 class DolarTestCase(TestCase):
     
     def test_get_dolar_http_response(self):
-        cal = Brazil()
-        dt = cal.add_working_days(datetime.today(),-1)
+        dt = get_last_business_day()
         today = dt.strftime('%m-%d-%Y')
         url = f"https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao='"+ today + "'&$top=100&$format=json&$select=cotacaoCompra"
         response = requests.get(url)

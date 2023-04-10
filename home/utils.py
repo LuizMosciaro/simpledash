@@ -34,8 +34,11 @@ def get_legacy_session():
 
 def get_last_business_day():
     today = datetime.today().date()
-    last_business_day = np.busday_offset(today, -1, roll='backward')
-    return str(last_business_day)
+    if np.is_busday(today):
+        return today
+    else:
+        last_business_day = np.busday_offset(today, -1, roll='backward')
+        return last_business_day
 
 def get_weather(city):
     api_key = os.getenv('WEATHER_API_KEY')
@@ -61,7 +64,7 @@ def get_selic():
     workdays = Brazil().get_working_days_delta(
         date(date.today().year, 1, 1), date(date.today().year, 12, 31))
     dt = get_last_business_day()
-    today = datetime.strptime(dt,'%Y-%m-%d').strftime('%m-%d-%Y')
+    today = dt.strftime('%m-%d-%Y')
     url = f'https://api.bcb.gov.br/dados/serie/bcdata.sgs.11/dados?formato=json&dataInicial={today}&dataFinal={today}'
     response = requests.get(url)
     interest = response.json()[0]['valor']
@@ -111,21 +114,23 @@ def get_ipca2():
         return context
     except requests.exceptions.ConnectTimeout:
         context = {
-            'monthly_inflation': 'null',
-            'ytd_inflation': 'null',
-            'past_12m_inflation': 'null'
+            'monthly_inflation': None,
+            'ytd_inflation': None,
+            'past_12m_inflation': None
         }
         return context
 
 def get_dolar():
     dt = get_last_business_day()
-    today = datetime.strptime(dt,'%Y-%m-%d').strftime('%m-%d-%Y')
+    today = dt.strftime('%m-%d-%Y')
     url = f"https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao='"+ today + "'&$top=100&$format=json&$select=cotacaoCompra"
     response = requests.get(url)
     value = response.json()['value']
     if value:
         dolar = str(value[0]['cotacaoCompra'])[:4]
         return {'dolar': dolar}
+    else:
+        return {'dolar': 'null'}
 
 def get_btc():
     url = 'https://brapi.dev/api/v2/crypto?coin=BTC&currency=BRL'
