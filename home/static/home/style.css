@@ -340,6 +340,16 @@ td {
   padding-top: 5px;
 }
 
+.chartBox {
+  height:100%;
+  width:auto;
+  overflow:hidden;
+}
+
+.columnA a {
+  color: black;
+}
+
 @media only screen and (max-width:850px) {
   html,body {
     margin: 0 5px;
@@ -348,33 +358,42 @@ td {
     margin: unset;
   }
   .container {
+    margin-top: 10px;
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(6,1fr);
+    grid-template-rows: repeat(7,1fr);
     grid-template-areas:
+    "sidebar"
     "content5"
     "content6"
     "content7"
+    "content8"
     "main"
-    "content9"
-    "sidebar";
+    "content9";
   }
-  .logo,#content1,#content2,#content3,#content4,#content8 {
+  .logo,#content1,#content2,#content3,#content4 {
     display: none;
   }
-  #sidebar {
+  #sidebar,#sidebarmain {
     border-radius: var(--main-radius);
-    margin: 0;
-    height: 70px;
+    margin-bottom: 15px;
+    height: 40px;
+  }
+  #sidebar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
   }
   #sidebar ul {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     list-style: none;
     padding: unset;
+    gap: 20px;
   }
   #sidebar li {
     padding: var(--main-padding);
+    flex-direction: row;
   }
   #sidebar li:last-child {
     margin: 0;
@@ -386,6 +405,19 @@ td {
     width: 100%;
     padding: var(--main-padding);
     border-radius: var(--main-radius);
+  }
+  #content8 {
+    height: 150px;
+  }
+  #content9 {
+    padding: 10px 0;
+  }
+  .chartBox {
+    height:200px;
+    width:auto;
+    overflow:hidden;
+    grid-column: 1 / 5; 
+    grid-row: auto;
   }
 }
 

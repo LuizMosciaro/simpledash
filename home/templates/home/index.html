@@ -10,7 +10,7 @@
         <h3>At your location the temperature its {{ temp }}ºC {% if feelslike != temp %}with sensation of {{ feelslike }}ºC{% endif %} and relative humidity of {{ humidity }}%, it's also {{ conditions }}.</h3>
     </div>
     <div id='content4'>
-        <li>Perfil</li>
+        <li>Profile</li>
         <li>
             <lord-icon
                 src="https://cdn.lordicon.com/ajkxzzfb.json"
@@ -33,7 +33,7 @@
     </div>
     <div id='content6'>
         <ul>
-            <li>DÓLAR: R$ {{ dolar }}</li>
+            <li>DOLAR: R$ {{ dolar }}</li>
             <li>BITCOIN: R$ {{ btc }}</li>
         </ul>
         <div style="margin-bottom: 10px;">
@@ -48,9 +48,9 @@
     <div id='content7'>
         <table>
             <tr>
-                <th>IPCA Mensal</th>
-                <th>IPCA Acumulado</th>
-                <th>IPCA 12 Meses</th>
+                <th>IPCA Monthly</th>
+                <th>IPCA YTD</th>
+                <th>IPCA 12 Months</th>
             </tr>
             <tr>
                 <td>{{ monthly_inflation }}%</td>
@@ -95,7 +95,7 @@
         <div class="wrapper">
             <div class="columnA">
                 <ul>
-                    <li>Contact: Luiz M.</li>
+                    <li>Contact: <a href="https://www.linkedin.com/in/luizmosciaro/" target="_blank">Luiz Mosciaro</a></li>
                     <li>Your IP: {{ ip }}</li>
                     <li>City: {{ location_city }}</li>
                     <li>Country: {{ location_country }}</li>
@@ -113,27 +113,27 @@
     </div>
     <main>
         <div class="item-grid">
-            <li>Valor de Mercado</li>
+            <li>Market Value</li>
             <p>R$ {{ td_mkt_value }}</p>
         </div>
         <div class="item-grid">
-            <li>Nmro de Acoes</li>
+            <li>Stocks Available</li>
             <p>{{ stock_float }}</p>
         </div>
         <div class="item-grid">
             <li>
-                P/L
+                P/E
                 <lord-icon  class="myli" src="https://cdn.lordicon.com/enzmygww.json" trigger="hover" style="width:15px;height:15px;"></lord-icon>
-                <p class="hide">Mede a relação entre o preço das ações e o lucro por ação nos últimos 12 meses</p>
+                <p class="hide">Measures the relationship between stock price and earnings per share over the last 12 months</p>
             </li>
             
             <p>{{ pl }}</p>
         </div>
         <div class="item-grid">
             <li>
-                VPA
+                EPS
                 <lord-icon  class="myli" src="https://cdn.lordicon.com/enzmygww.json" trigger="hover" style="width:15px;height:15px;"></lord-icon>
-                <p class="hide">Patrimônio Líquido dividido pelo número de ações</p>
+                <p class="hide">Equity divided by the number of shares</p>
             </li>
             <p>{{ vpa }}</p>
         </div>
@@ -141,12 +141,12 @@
             <li>
                 ROE
                 <lord-icon  class="myli" src="https://cdn.lordicon.com/enzmygww.json" trigger="hover" style="width:15px;height:15px;"></lord-icon>
-                <p class="hide">Rentabilidade de uma empresa em relação aos recursos próprios investidos</p>
+                <p class="hide">Profitability of a company in relation to invested own resources</p>
             </li>
             <p>{{ roe }}</p>
         </div>      
         <div class="chart-price">
-            <div class="chartBox" style="width:auto; height:100%;overflow:hidden;">
+            <div class="chartBox">
                 <canvas id="myChart"></canvas> <!-- Para poder dar resize, precisa estar numa div sozinho -->
             </div>
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
