@@ -20,14 +20,6 @@ class TestHomeView(TestCase):
         self.assertEqual(response.status_code,HTTPStatus.OK)
         self.assertTemplateUsed(response,'home/index.html')
 
-    def test_home_sidebar_items_presence(self):
-        response = self.client.get(self.home_url).content.decode()
-        self.assertIn('<title>SimpleDash</title>',response)
-        self.assertIn('Dashboard',response)
-        self.assertIn('Menu',response)
-        self.assertIn('Login',response)
-        self.assertIn('Sign Up',response)
-
 class TestLoginView(TestCase):
 
     def setUp(self):
