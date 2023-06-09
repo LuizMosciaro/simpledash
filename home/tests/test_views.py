@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.test import Client, TestCase
 from django.urls import reverse
 
-from home.forms import NewAssetForm, SignUpForm
+from home.forms import NewAssetForm, SignUpForm, UpdateProfileForm
 from home.models import Asset
 
 
@@ -222,3 +222,71 @@ class InvestmentsViewTest(TestCase):
         existing_asset.delete()
 
         self.assertIsNone(Asset.objects.filter(symbol='ABC3').first())
+
+class ProfileViewTest(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+        self.profile_url = reverse('profile')
+
+        #Creating an user as the view its protected
+        self.user = User.objects.create_user(
+            username='testuser',
+            first_name = 'Firstname',
+            last_name = 'Lastname',
+            email='testuser@test.com',
+            password='testpass'
+        )
+        
+        #Login the user
+        self.client.login(
+                username='testuser',
+                password='testpass'
+            )
+        
+    def test_profile_get_returns_correct_html(self):
+        response = self.client.get(self.profile_url)
+
+        self.assertEqual(response.status_code,HTTPStatus.OK)
+        self.assertTemplateUsed(response,'home/profile.html')
+        self.assertIn('Profile',response.content.decode())
+
+    def test_profile_form_valid(self):
+        form_data = {
+            'first_name':'Secondname',
+            'last_name':'SecondLastname',
+            'email':'testuser@test.com'
+        }
+        form = UpdateProfileForm(form_data)
+
+        self.assertTrue(form.is_valid())
+
+    def test_profile_username_not_required(self):
+        form_data = {
+            'username':'',
+            'first_name':'FirstName',
+            'last_name':'LastName',
+        }
+        form = UpdateProfileForm(form_data)
+
+        self.assertTrue(form.is_valid())
+        
+    # def test_signup_create_new_user_and_redirects(self):
+    #     form_data = {
+    #         'username':'testuser',
+    #         'first_name':'FirstName',
+    #         'last_name':'LastName',
+    #         'email':'testuser@example.com',
+    #         'password1': '(H&*lhjikW#$%^CEI&*)',
+    #         'password2': '(H&*lhjikW#$%^CEI&*)',
+    #     }
+    #     form = SignUpForm(form_data)
+
+    #     self.assertTrue(form.is_valid())
+    #     user = form.save()
+
+    #     existing_user = User.objects.get(username='testuser')
+    #     self.assertEqual(existing_user.username,user.username)
+
+    #     response = self.client.post(reverse('signup'), data=form_data)
+    #     self.assertEqual(response.status_code,HTTPStatus.OK)

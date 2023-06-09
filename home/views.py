@@ -1,17 +1,14 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.gis.geoip2 import GeoIP2
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.cache import cache_page
-from geoip2.errors import AddressNotFoundError
 from django.http import JsonResponse
 
-from .forms import LoginForm, NewAssetForm, SignUpForm
+from .forms import LoginForm, NewAssetForm, SignUpForm, UpdateProfileForm
 from .models import Asset
-from .utils import (get_btc, get_dolar, get_home_api_calls, get_fundamentals,
-                    get_highest_volume_stocks, get_historic_prices, get_ipca2,
-                    get_selic, get_weather)
+from .utils import (get_home_api_calls, get_fundamentals,
+                    get_historic_prices)
 
 
 @cache_page(7200)
@@ -95,7 +92,20 @@ def consult_investments(request,item_id):
         }
     return JsonResponse(asset_data)
 
+@login_required
 def delete_asset(request,item_id):
     asset = get_object_or_404(Asset,id=item_id)
     asset.delete()
     return redirect('investments')
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        form = UpdateProfileForm(request.POST,instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = UpdateProfileForm(request.POST,instance=request.user)
+
+    return render(request,'home/profile.html',{'form':form})
